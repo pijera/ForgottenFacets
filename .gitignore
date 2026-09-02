@@ -1,0 +1,21 @@
+﻿# ==========================================
+# tModLoader / Terraria Specifični Fajlovi
+# ==========================================
+*.tmod
+Targets/
+Logs/
+*.user
+bin/
+obj/
+
+# ==========================================
+# Visual Studio / .NET / C# Pravila
+# ==========================================
+.vs/
+.vscode/
+*.suo
+*.userosscache
+*.sln.docstates
+*.log
+*.cache
+*.pdb

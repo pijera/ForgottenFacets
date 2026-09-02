@@ -1,0 +1,3 @@
+displayName = Forgotten Facets
+author = pijera
+version = 0.1
