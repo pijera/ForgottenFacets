@@ -40,9 +40,9 @@ namespace ForgottenFacets.Content.Buffs
             if (frozen)
             {
                 if (npc.boss)
-                    npc.velocity *= 0.96f;
+                    npc.velocity *= 0.98f;
                 else
-                    npc.velocity *= 0.91f;
+                    npc.velocity *= 0.93f;
             }
         }
 

@@ -8,12 +8,12 @@ Items: {
 
 	AncientIceLeggings: {
 		DisplayName: Ancient Ice Leggings
-		Tooltip: "4% increased ranged damage"
+		Tooltip: 4% increased ranged damage
 	}
 
 	AncientIceHelmet: {
 		DisplayName: Ancient Ice Helmet
-		Tooltip: "4% increased ranged damage"
+		Tooltip: 4% increased ranged damage
 	}
 
 	AncientIceBar: {
@@ -25,7 +25,6 @@ Items: {
 		DisplayName: Ancient Ice Ore
 		Tooltip: Looks very old
 	}
-	
 }
 
 Buffs: {

@@ -62,13 +62,15 @@ namespace ForgottenFacets.Content.Items.Armor.AncientIce
 
     public class AncientIceModPlayer : ModPlayer
     {
-        public const int MAX_COOLDOWN = 240;
+        public const int MAX_COOLDOWN = 10 * 60;
         public bool fullSet;
         public int cooldown;
 
         public override void ResetEffects()
         {
+
             fullSet = false;
+
             if (cooldown > 0)
             {
                 if (cooldown == 1)
@@ -101,6 +103,9 @@ namespace ForgottenFacets.Content.Items.Armor.AncientIce
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            if (!fullSet)
+                return;
+
             if (hit.Crit && cooldown == 0)
             {
                 cooldown = MAX_COOLDOWN;

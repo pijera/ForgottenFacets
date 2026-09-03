@@ -78,7 +78,7 @@ namespace ForgottenFacets.Content.Projectiles
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            target.AddBuff(ModContent.BuffType<FrostbittenDebuff>(), 120);
+            target.AddBuff(ModContent.BuffType<FrostbittenDebuff>(),150);
         }
     }
 }
