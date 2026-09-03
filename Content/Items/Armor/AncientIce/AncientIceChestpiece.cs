@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ForgottenFacets.Content.Materials;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,14 +8,12 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace ForgottenFacets.Content.Items.Armor
+namespace ForgottenFacets.Content.Items.Armor.AncientIce
 {
-    
-
     [AutoloadEquip(EquipType.Body)]
     internal class AncientIceChestpiece : ModItem
     {
-        public override string Texture => "ForgottenFacets/Assets/Items/Armor/AncientIceChestpiece";
+        public override string Texture => "ForgottenFacets/Assets/Items/Armor/AncientIce/AncientIceChestpiece";
 
         public override void SetDefaults()
         {
@@ -23,7 +22,7 @@ namespace ForgottenFacets.Content.Items.Armor
 
             Item.rare = ItemRarityID.Blue;
             Item.sellPrice(silver: 60);
-            Item.defense = 6; 
+            Item.defense = 4; 
         }
         public override void UpdateEquip(Player player)
         {
@@ -33,8 +32,8 @@ namespace ForgottenFacets.Content.Items.Armor
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.IceBlock, 20)
-                .AddIngredient(ItemID.Silk, 10)
+                .AddIngredient(ModContent.ItemType<AncientIceBar>(), 15)
+                .AddIngredient(ItemID.Amethyst, 3)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
