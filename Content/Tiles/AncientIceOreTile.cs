@@ -81,7 +81,22 @@ namespace ForgottenFacets.Content.Tiles
 
     public class AncientIceWorldSystem : ModSystem
     {
-        public bool AncientIceGenerated = false;
+        public static bool AncientIceGenerated;
+
+        public override void OnWorldLoad()
+        {
+            AncientIceGenerated = false;
+        }
+
+        public override void SaveWorldData(TagCompound tag)
+        {
+            tag["AncientIceGenerated"] = AncientIceGenerated;
+        }
+
+        public override void LoadWorldData(TagCompound tag)
+        {
+            AncientIceGenerated = tag.GetBool("AncientIceGenerated");
+        }
 
         public override void PostUpdateEverything()
         {
