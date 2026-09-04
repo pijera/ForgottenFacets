@@ -2,7 +2,7 @@ WorldGen.AncientIceOreText: The ancient frost has returned to the depths...
 
 Items: {
 	AncientIceChestpiece: {
-		DisplayName: Ancient Ice Chestpiece
+		DisplayName: Ancient Ice Chestplate
 		Tooltip: 4% increased ranged damage
 	}
 
@@ -12,17 +12,17 @@ Items: {
 	}
 
 	AncientIceHelmet: {
-		DisplayName: Ancient Ice Helmet
+		DisplayName: Ancient Ice Mask
 		Tooltip: 4% increased ranged damage
 	}
 
 	AncientIceBar: {
-		DisplayName: Ancient Ice Bar
+		DisplayName: Bar of Ancient Ice
 		Tooltip: Cold to the touch
 	}
 
 	AncientIceOre: {
-		DisplayName: Ancient Ice Ore
+		DisplayName: Chunk of Ancient Ice
 		Tooltip: Looks very old
 	}
 }
@@ -30,7 +30,7 @@ Items: {
 Buffs: {
 	FrostbittenDebuff: {
 		DisplayName: Frostbitten Debuff
-		Description: Mods.ForgottenFacets.Buffs.FrostbittenDebuff.Description
+		Description: Can't really move that well
 	}
 }
 

@@ -31,8 +31,8 @@ namespace ForgottenFacets.Content.Items.Armor.AncientIce
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<AncientIceBar>(), 12)
-                .AddIngredient(ItemID.Amethyst, 3)
+                .AddIngredient(ModContent.ItemType<AncientIceBar>(), 18)
+                .AddIngredient(ItemID.Sapphire, 3)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

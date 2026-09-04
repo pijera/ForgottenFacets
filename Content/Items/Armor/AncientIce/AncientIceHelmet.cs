@@ -1,4 +1,5 @@
 ﻿using ForgottenFacets.Content.Dusts;
+using ForgottenFacets.Content.Materials;
 using ForgottenFacets.Content.Projectiles;
 using ForgottenFacets.Core;
 using Microsoft.Xna.Framework;
@@ -46,7 +47,7 @@ namespace ForgottenFacets.Content.Items.Armor.AncientIce
             if (modPlayer.cooldown <= 0 && Main.rand.NextBool(20))
             {
                 Dust.NewDustPerfect(player.Center + Main.rand.NextVector2Circular(player.width / 2, player.height / 2), ModContent.DustType<GlowDust>(),
-                    -Vector2.UnitY * 0.66f, 0, new Color(149, 71, 234), Main.rand.NextFloat(0.5f, 1f)).noGravity = true;
+                    -Vector2.UnitY * 0.66f, 0, Color.Cyan, Main.rand.NextFloat(0.5f, 1f)).noGravity = true;
             }
         }
 
@@ -56,6 +57,15 @@ namespace ForgottenFacets.Content.Items.Armor.AncientIce
 
             if (modPlayer.fullSet && modPlayer.cooldown <= 0)
                 player.armorEffectDrawShadow = true;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<AncientIceBar>(), 12)
+                .AddIngredient(ItemID.Sapphire, 3)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
 
     }
@@ -77,7 +87,7 @@ namespace ForgottenFacets.Content.Items.Armor.AncientIce
                 {
                     for (int i = 0; i < 15; i++)
                     {
-                        Dust.NewDustPerfect(Player.Center + Main.rand.NextVector2Circular(30f, 30f), ModContent.DustType<SparkleDust>(), -Vector2.UnitY, 0, Color.White, 0.15f);
+                        Dust.NewDustPerfect(Player.Center + Main.rand.NextVector2Circular(30f, 30f), ModContent.DustType<SparkleDust>(), -Vector2.UnitY, 0, Color.LightCyan, 0.15f);
                     }
 
                     SoundEngine.PlaySound(SoundID.MaxMana, Player.Center);
@@ -116,7 +126,7 @@ namespace ForgottenFacets.Content.Items.Armor.AncientIce
         private void DoCritEffect(NPC target)
         {
             if (Main.myPlayer == Player.whoAmI)//multiplayer compentability
-                Projectile.NewProjectile(Player.GetSource_OnHit(target), target.Center, Vector2.Zero, ModContent.ProjectileType<AncientIceArmorProjectile>(), 30, 2f, Player.whoAmI, 50);
+                Projectile.NewProjectile(Player.GetSource_OnHit(target), target.Center, Vector2.Zero, ModContent.ProjectileType<AncientIceArmorProjectile>(), 30 + Player.HeldItem.damage, 2f, Player.whoAmI, 50);
 
 
             SoundEngine.PlaySound(SoundID.Item120 with { PitchRange = (0.8f, 1.2f) }, target.Center);

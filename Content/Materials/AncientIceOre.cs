@@ -54,15 +54,15 @@ namespace ForgottenFacets.Content.Materials
         {
             float sin = (float)Math.Abs(Math.Sin(Main.GlobalTimeWrappedHourly)) * 0.5f;
 
-            Lighting.AddLight(Item.Center, new Color(149, 71, 234).ToVector3() * sin);
+            Lighting.AddLight(Item.Center, Color.Lerp(new Color(71,143,234), new Color(0, 64, 145), 0.5f).ToVector3() * sin);
 
             if (Main.rand.NextBool(30))
                 Dust.NewDustPerfect(Item.Center + Main.rand.NextVector2Circular(20f,20f), ModContent.DustType<GlowDust>(), 
-                    -Vector2.UnitY, 0, new Color(149, 71, 234), Main.rand.NextFloat(0.3f, 0.5f));
+                    -Vector2.UnitY, 0, Color.Lerp(new Color(71, 143, 234), new Color(0, 64, 145), 0.5f), Main.rand.NextFloat(0.3f, 0.5f));
 
             if (Main.rand.NextBool(30))
                 Dust.NewDustPerfect(Item.Center + Main.rand.NextVector2Circular(20f, 20f),
-                    ModContent.DustType<SparkleDust>(), -Vector2.UnitY, 0, new Color(149, 71, 234), Main.rand.NextFloat(0.3f, 0.5f));
+                    ModContent.DustType<SparkleDust>(), -Vector2.UnitY, 0, Color.Lerp(new Color(71, 143, 234), new Color(0, 64, 145), 0.5f), Main.rand.NextFloat(0.3f, 0.5f));
 
 
         }

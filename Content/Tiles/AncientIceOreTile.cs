@@ -10,10 +10,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Chat;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
 
 namespace ForgottenFacets.Content.Tiles
@@ -24,12 +26,19 @@ namespace ForgottenFacets.Content.Tiles
 
         public override void SetStaticDefaults()
         {
-            this.SetUpOre(ModContent.ItemType<AncientIceOre>(), Color.HotPink, "Ancient Ice");
+            this.SetUpOre(ModContent.ItemType<AncientIceOre>(), Color.Gray, "Ancient Ice");
             Main.tileOreFinderPriority[Type] = 410;
             DustType = DustID.Silver;
-            MineResist = 2f;
+            MineResist = 2.5f;
 
             MinPick = 65;//demonite and crimtane
+            Main.tileLighted[Type] = true;
+        }
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            r = 0.09f;
+            b = 0.09f;
+            g = 0.09f;
         }
 
     }
@@ -45,6 +54,7 @@ namespace ForgottenFacets.Content.Tiles
 
         public static void SpawnOre()
         {
+
             if (Main.netMode == NetmodeID.SinglePlayer || Main.netMode == NetmodeID.Server)
             {
                 ChatHelper.BroadcastChatMessage(AncientIceOreText.ToNetworkText(), new Color(130, 200, 255));
@@ -53,16 +63,15 @@ namespace ForgottenFacets.Content.Tiles
             for (int i = 0; i < (int)(Main.maxTilesX * Main.maxTilesY * 0.001); i++)
             {
                 int x = Main.rand.Next(0, Main.maxTilesX);
-                int y = Main.rand.Next((int)Main.worldSurface, Main.maxTilesY - 200);
+                int y = Main.rand.Next((int)Main.worldSurface + 450, Main.maxTilesY);
 
                 Tile tile = Framing.GetTileSafely(x, y);
 
-                if (tile.HasTile && tile.TileType == TileID.IceBlock)
+                if ((tile.HasTile && tile.TileType == TileID.IceBlock) && Main.rand.NextBool(2))
                 {
-                    WorldGen.TileRunner(x, y, Main.rand.Next(5, 12), Main.rand.Next(5, 10), ModContent.TileType<AncientIceOreTile>());
+                    WorldGen.TileRunner(x, y, Main.rand.Next(6, 8), Main.rand.Next(4, 7), ModContent.TileType<AncientIceOreTile>());
                 }
             }
-
             if (Main.netMode == NetmodeID.Server)
             {
                 NetMessage.SendData(MessageID.WorldData);
@@ -70,16 +79,19 @@ namespace ForgottenFacets.Content.Tiles
         }
     }
 
-    public class ConditionForSpawning : GlobalNPC
+    public class AncientIceWorldSystem : ModSystem
     {
-        public override void OnKill(NPC npc)
+        public bool AncientIceGenerated = false;
+
+        public override void PostUpdateEverything()
         {
-            if (npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.BrainofCthulhu)
+            if (!AncientIceGenerated && NPC.downedBoss2)
             {
                 AncientIceOreSystem.SpawnOre();
+                AncientIceGenerated = true;
             }
         }
     }
 
-
+   
 }
