@@ -26,7 +26,7 @@ namespace ForgottenFacets.Content.Tiles
 
         public override void SetStaticDefaults()
         {
-            this.SetUpOre(ModContent.ItemType<AncientIceOre>(), Color.Gray, "Ancient Ice");
+            this.SetUpOre(ModContent.ItemType<AncientIceOre>(), Color.DarkGreen, "Ancient Ice");
             Main.tileOreFinderPriority[Type] = 410;
             DustType = DustID.Silver;
             MineResist = 2.5f;
@@ -63,7 +63,7 @@ namespace ForgottenFacets.Content.Tiles
             for (int i = 0; i < (int)(Main.maxTilesX * Main.maxTilesY * 0.001); i++)
             {
                 int x = Main.rand.Next(0, Main.maxTilesX);
-                int y = Main.rand.Next((int)Main.worldSurface + 450, Main.maxTilesY);
+                int y = Main.rand.Next((int)Main.worldSurface + 350, Main.maxTilesY);
 
                 Tile tile = Framing.GetTileSafely(x, y);
 
@@ -79,34 +79,44 @@ namespace ForgottenFacets.Content.Tiles
         }
     }
 
-    public class AncientIceWorldSystem : ModSystem
+    public class AncientIceGlobalNPC : GlobalNPC
     {
-        public static bool AncientIceGenerated;
-
-        public override void OnWorldLoad()
+        public override void OnKill(NPC npc)
         {
-            AncientIceGenerated = false;
-        }
-
-        public override void SaveWorldData(TagCompound tag)
-        {
-            tag["AncientIceGenerated"] = AncientIceGenerated;
-        }
-
-        public override void LoadWorldData(TagCompound tag)
-        {
-            AncientIceGenerated = tag.GetBool("AncientIceGenerated");
-        }
-
-        public override void PostUpdateEverything()
-        {
-            if (!AncientIceGenerated && NPC.downedBoss2)
+            if (npc.type == NPCID.EaterofWorldsHead ||
+                npc.type == NPCID.EaterofWorldsBody ||
+                npc.type == NPCID.EaterofWorldsTail)
             {
-                AncientIceOreSystem.SpawnOre();
-                AncientIceGenerated = true;
+                bool anotherSegmentAlive = false;
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    NPC otherNpc = Main.npc[i];
+
+                    if (i != npc.whoAmI && otherNpc.active)
+                    {
+                        if (otherNpc.type == NPCID.EaterofWorldsHead ||
+                            otherNpc.type == NPCID.EaterofWorldsBody ||
+                            otherNpc.type == NPCID.EaterofWorldsTail)
+                        {
+                            anotherSegmentAlive = true;
+                            break;
+                        }
+                    }
+                }
+                if (!anotherSegmentAlive && !NPC.downedBoss2)
+                {
+                    NPC.downedBoss2 = true;
+                    AncientIceOreSystem.SpawnOre();
+                }
             }
+            if (npc.type == NPCID.BrainofCthulhu && !NPC.downedBoss2)
+            {
+                NPC.downedBoss2 = true;
+                AncientIceOreSystem.SpawnOre();
+            }
+
+
         }
     }
 
-   
 }

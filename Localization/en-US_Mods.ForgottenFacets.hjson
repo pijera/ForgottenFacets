@@ -25,6 +25,11 @@ Items: {
 		DisplayName: Chunk of Ancient Ice
 		Tooltip: Looks very old
 	}
+
+	TwinFrostArbalest: {
+		DisplayName: Twin Frost Arbalest
+		Tooltip: "Shoots two arrows that may applay Frostburn"
+	}
 }
 
 Buffs: {
@@ -34,4 +39,7 @@ Buffs: {
 	}
 }
 
-Projectiles.AncientIceArmorProjectile.DisplayName: Ancient Ice Armor Projectile
+Projectiles: {
+	AncientIceArmorProjectile.DisplayName: Ancient Ice Armor Projectile
+	TwinFrostArbalestArrow.DisplayName: Twin Frost Arbalest Arrow
+}

@@ -37,11 +37,11 @@ namespace ForgottenFacets.Core
         internal static void SetUpOre(this ModTile mt, int itemDropID, Color mapColor, string oreName)
         {
             mt.RegisterItemDrop(itemDropID);
+
             TileID.Sets.Ore[mt.Type] = true;
             TileID.Sets.FriendlyFairyCanLureTo[mt.Type] = true;
             Main.tileSpelunker[mt.Type] = true;
 
-            
             Main.tileShine2[mt.Type] = true;
             Main.tileShine[mt.Type] = 975;
 
