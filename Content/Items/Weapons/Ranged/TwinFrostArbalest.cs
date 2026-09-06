@@ -17,6 +17,12 @@ namespace ForgottenFacets.Content.Items.Weapons.Ranged
     internal class TwinFrostArbalest : ModItem
     {
         public override string Texture => "ForgottenFacets/Assets/Items/Weapons/Ranged/TwinFrostArbalest";
+
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 1;
+        }
+
         public override void SetDefaults()
         {
             Item.width = 56;

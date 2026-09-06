@@ -28,7 +28,12 @@ Items: {
 
 	TwinFrostArbalest: {
 		DisplayName: Twin Frost Arbalest
-		Tooltip: "Shoots two arrows that may applay Frostburn"
+		Tooltip: Shoots two arrows that may applay Frostburn
+	}
+
+	FrostBlaster: {
+		DisplayName: Frost Blaster
+		Tooltip: ""
 	}
 }
 
@@ -42,4 +47,6 @@ Buffs: {
 Projectiles: {
 	AncientIceArmorProjectile.DisplayName: Ancient Ice Armor Projectile
 	TwinFrostArbalestArrow.DisplayName: Twin Frost Arbalest Arrow
+	FrostBlasterProjectile.DisplayName: Frost Blaster Projectile
+	FrostBlasterHoldOut.DisplayName: Frost Blaster Hold Out
 }
