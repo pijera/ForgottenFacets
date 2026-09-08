@@ -1,5 +1,5 @@
 ﻿using ForgottenFacets.Content.Materials;
-using ForgottenFacets.Content.Projectiles;
+using ForgottenFacets.Content.Projectiles.FrostBlasterProjectiles;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace ForgottenFacets.Content.Items.Weapons.Ranged
         public override void SetDefaults()
         {
             Item.Size = new Vector2(52, 16);
-            Item.damage = 20;
+            Item.damage = 25;
             Item.DamageType = DamageClass.Ranged;
             Item.channel = true;
             Item.useStyle = ItemUseStyleID.Shoot;
@@ -43,7 +43,6 @@ namespace ForgottenFacets.Content.Items.Weapons.Ranged
             Item.shoot = ModContent.ProjectileType<FrostBlasterHoldOut>();
             Item.shootSpeed = 1f;
 
-            
             Item.knockBack = 6f;
             Item.rare = ItemRarityID.Blue;
             Item.sellPrice(silver: 50);
@@ -55,6 +54,8 @@ namespace ForgottenFacets.Content.Items.Weapons.Ranged
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<FrostBlasterHoldOut>(), damage, knockback, player.whoAmI);
+
+
             return false;
         }
 
@@ -68,3 +69,5 @@ namespace ForgottenFacets.Content.Items.Weapons.Ranged
         }
     }
 }
+
+

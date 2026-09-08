@@ -1,4 +1,5 @@
-﻿using ForgottenFacets.Content.Materials;
+﻿using ForgottenFacets.Content.Dusts;
+using ForgottenFacets.Content.Materials;
 using ForgottenFacets.Content.Projectiles;
 using ForgottenFacets.Core;
 using Microsoft.Xna.Framework;
@@ -53,8 +54,18 @@ namespace ForgottenFacets.Content.Items.Weapons.Ranged
         {
             Vector2 spawnPostion = position + velocity.SafeNormalize(Vector2.Zero) * 20f;
 
+            
+
             if (ModUtils.CheckWoodenArrow(type, player))
+            {
+                for (int i = 0; i < 7; i++)
+                {
+                    Dust.NewDustPerfect(spawnPostion, ModContent.DustType<SparkleDust>(), Main.rand.NextVector2Circular(3, 3), 50, Color.SkyBlue, Main.rand.NextFloat(0.1f, 0.3f));
+                    Dust.NewDustPerfect(spawnPostion, ModContent.DustType<GlowDust>(), Main.rand.NextVector2Circular(3, 3), 50, Color.Cyan, Main.rand.NextFloat(0.1f, 0.3f));
+                }
+
                 Projectile.NewProjectile(source, spawnPostion, velocity, ModContent.ProjectileType<TwinFrostArbalestArrow>(), damage, knockback, player.whoAmI);
+            }
             else
                 Projectile.NewProjectile(source, spawnPostion, velocity, type, damage, knockback, player.whoAmI);
 

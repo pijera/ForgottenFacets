@@ -22,11 +22,11 @@ namespace ForgottenFacets.Content.Items.Armor.AncientIce
 
             Item.rare = ItemRarityID.Blue;
             Item.sellPrice(silver: 50);
-            Item.defense = 4;
+            Item.defense = 3;
         }
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage(DamageClass.Ranged) *= 1.04f;
+            player.GetCritChance<RangedDamageClass>() += 5f;
         }
         public override void AddRecipes()
         {

@@ -40,10 +40,22 @@ namespace ForgottenFacets.Content.Buffs
             if (frozen)
             {
                 if (npc.boss)
+                {
                     npc.velocity *= 0.98f;
+                }
                 else
+                {
                     npc.velocity *= 0.93f;
+                }
             }
+        }
+
+        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
+        {
+            if (npc.boss)
+                modifiers.Defense -= 7;
+            else
+                modifiers.Defense -= 10;
         }
 
         public override void DrawEffects(NPC npc, ref Color drawColor)

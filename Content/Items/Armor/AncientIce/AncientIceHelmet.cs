@@ -2,6 +2,7 @@
 using ForgottenFacets.Content.Materials;
 using ForgottenFacets.Content.Projectiles;
 using ForgottenFacets.Core;
+using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -27,12 +28,12 @@ namespace ForgottenFacets.Content.Items.Armor.AncientIce
             Item.height = 18;
 
             Item.rare = ItemRarityID.Blue;
-            Item.defense = 4;
+            Item.defense = 2;
         }
 
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage(DamageClass.Ranged) *= 1.04f;
+            player.GetCritChance<RangedDamageClass>() += 5f;
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs) => body.type == ModContent.ItemType<AncientIceChestpiece>() && legs.type == ModContent.ItemType<AncientIceLeggings>();
@@ -42,7 +43,8 @@ namespace ForgottenFacets.Content.Items.Armor.AncientIce
             var modPlayer = player.GetModPlayer<AncientIceModPlayer>();
 
             modPlayer.fullSet = true;
-            player.setBonus = "Critical strikes cause freezing explosions";
+            player.setBonus = "10% critical strike damage \n" +
+                "Critical strikes cause freezing explosions";
 
             if (modPlayer.cooldown <= 0 && Main.rand.NextBool(20))
             {
@@ -50,7 +52,7 @@ namespace ForgottenFacets.Content.Items.Armor.AncientIce
                     -Vector2.UnitY * 0.66f, 0, Color.Cyan, Main.rand.NextFloat(0.5f, 1f)).noGravity = true;
             }
         }
-
+        
         public override void ArmorSetShadows(Player player)
         {
             var modPlayer = player.GetModPlayer<AncientIceModPlayer>();
@@ -75,6 +77,17 @@ namespace ForgottenFacets.Content.Items.Armor.AncientIce
         public const int MAX_COOLDOWN = 10 * 60;
         public bool fullSet;
         public int cooldown;
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            var modPlayer = Player.GetModPlayer<AncientIceModPlayer>();
+
+            if (modPlayer.fullSet)
+            {
+                modifiers.CritDamage += 0.1f;
+            }
+        
+        }
 
         public override void ResetEffects()
         {

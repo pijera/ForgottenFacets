@@ -3,17 +3,17 @@ WorldGen.AncientIceOreText: The ancient frost has returned to the depths...
 Items: {
 	AncientIceChestpiece: {
 		DisplayName: Ancient Ice Chestplate
-		Tooltip: 4% increased ranged damage
+		Tooltip: 5% critical strike chance
 	}
 
 	AncientIceLeggings: {
 		DisplayName: Ancient Ice Leggings
-		Tooltip: 4% increased ranged damage
+		Tooltip: 5% critical strike chance
 	}
 
 	AncientIceHelmet: {
 		DisplayName: Ancient Ice Mask
-		Tooltip: 4% increased ranged damage
+		Tooltip: 5% critical strike chance
 	}
 
 	AncientIceBar: {
@@ -28,7 +28,7 @@ Items: {
 
 	TwinFrostArbalest: {
 		DisplayName: Twin Frost Arbalest
-		Tooltip: Shoots two arrows that may applay Frostburn
+		Tooltip: Shoots two arrows that may apply Frostburn
 	}
 
 	FrostBlaster: {
@@ -49,4 +49,8 @@ Projectiles: {
 	TwinFrostArbalestArrow.DisplayName: Twin Frost Arbalest Arrow
 	FrostBlasterProjectile.DisplayName: Frost Blaster Projectile
 	FrostBlasterHoldOut.DisplayName: Frost Blaster Hold Out
+	FrostBlasterWeakProjectile.DisplayName: Frost Blaster Weak Projectile
+	FrostBlasterVeryWeakProjectile.DisplayName: Frost Blaster Very Weak Projectile
+	FrostBlasterMediumProjectile.DisplayName: Frost Blaster Medium Projectile
+	FrostBlasterStrongProjectile.DisplayName: Frost Blaster Strong Projectile
 }
