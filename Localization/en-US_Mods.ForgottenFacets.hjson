@@ -35,6 +35,21 @@ Items: {
 		DisplayName: Frost Blaster
 		Tooltip: ""
 	}
+
+	WaterEssence: {
+		DisplayName: Water Essence
+		Tooltip: ""
+	}
+
+	EarthEssence: {
+		DisplayName: Earth Essence
+		Tooltip: ""
+	}
+
+	FireEssence: {
+		DisplayName: Fire Essence
+		Tooltip: ""
+	}
 }
 
 Buffs: {
