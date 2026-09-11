@@ -45,7 +45,6 @@ namespace ForgottenFacets.Core
             NPCID.ZombieMerman
 
         };
-
         public static readonly HashSet<int> FireEssenceDroppers = new()//fire essence,ruby
         {
             //pre-hardmode
@@ -64,7 +63,6 @@ namespace ForgottenFacets.Core
             NPCID.RedDevil,
             534,
         };
-
         public static readonly HashSet<int> EarthEssenceDroppers = new()//earth essence,topaz
         {
             //pre-hardmode
@@ -230,6 +228,43 @@ namespace ForgottenFacets.Core
                 npcLoot.Add(difficultyScaling);
             }
 
+            if (LifeEssenceDroppers.Contains(npc.type))
+            {
+                IItemDropRule classicRule = ItemDropRule.Common(ModContent.ItemType<LifeEssence>(), 4, 1, 3);
+                IItemDropRule expertRule = ItemDropRule.Common(ModContent.ItemType<LifeEssence>(), 3, 1, 3);
+
+                IItemDropRule difficultyScaling = new DropBasedOnExpertMode(classicRule, expertRule);
+
+                npcLoot.Add(difficultyScaling);
+            }
+
+            if (StormEssenceDroppers.Contains(npc.type))
+            {
+                IItemDropRule classicRule = ItemDropRule.Common(ModContent.ItemType<StormEssence>(), 4, 1, 3);
+                IItemDropRule expertRule = ItemDropRule.Common(ModContent.ItemType<StormEssence>(), 3, 1, 3);
+
+                IItemDropRule difficultyScaling = new DropBasedOnExpertMode(classicRule, expertRule);
+
+                npcLoot.Add(difficultyScaling);
+            }
+            if (ArcaneEssenceDroppers.Contains(npc.type))
+            {
+                IItemDropRule classicRule = ItemDropRule.Common(ModContent.ItemType<ArcaneEssence>(), 4, 1, 3);
+                IItemDropRule expertRule = ItemDropRule.Common(ModContent.ItemType<ArcaneEssence>(), 3, 1, 3);
+
+                IItemDropRule difficultyScaling = new DropBasedOnExpertMode(classicRule, expertRule);
+
+                npcLoot.Add(difficultyScaling);
+            }
+            if (AncientEssenceDroppers.Contains(npc.type))
+            {
+                IItemDropRule classicRule = ItemDropRule.Common(ModContent.ItemType<AncientEssence>(), 4, 1, 3);
+                IItemDropRule expertRule = ItemDropRule.Common(ModContent.ItemType<AncientEssence>(), 3, 1, 3);
+
+                IItemDropRule difficultyScaling = new DropBasedOnExpertMode(classicRule, expertRule);
+
+                npcLoot.Add(difficultyScaling);
+            }
         }
     }
 }

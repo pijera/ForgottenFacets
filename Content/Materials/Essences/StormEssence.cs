@@ -13,9 +13,9 @@ using Terraria.ModLoader;
 
 namespace ForgottenFacets.Content.Materials.Essences
 {
-    internal class EarthEssence : ModItem
+    internal class StormEssence : ModItem
     {
-        public override string Texture => "ForgottenFacets/Assets/Materials/Essences/EarthEssence";
+        public override string Texture => "ForgottenFacets/Assets/Materials/Essences/StormEssence";
 
         public override void SetStaticDefaults()
         {
@@ -23,7 +23,7 @@ namespace ForgottenFacets.Content.Materials.Essences
             ItemID.Sets.SortingPriorityMaterials[Type] = 60;
 
             ItemID.Sets.AnimatesAsSoul[Type] = true;
-            Main.RegisterItemAnimation(Type, new DrawAnimationVertical(8, 23));
+            Main.RegisterItemAnimation(Type, new DrawAnimationVertical(8, 8));
         }
         public override void SetDefaults()
         {
@@ -51,7 +51,7 @@ namespace ForgottenFacets.Content.Materials.Essences
         {
             Texture2D texture = TextureAssets.Item[Type].Value;
 
-            int frameCount = 23;
+            int frameCount = 8;
 
             int frameHeight = texture.Height / frameCount;
             int frame = (int)(Main.GlobalTimeWrappedHourly * 8f) % frameCount;

@@ -37,18 +37,38 @@ Items: {
 	}
 
 	WaterEssence: {
-		DisplayName: Water Essence
-		Tooltip: ""
+		DisplayName: Essence of Water
+		Tooltip: Material
 	}
 
 	EarthEssence: {
-		DisplayName: Earth Essence
-		Tooltip: ""
+		DisplayName: Essence of Earth
+		Tooltip: Material
 	}
 
 	FireEssence: {
-		DisplayName: Fire Essence
-		Tooltip: ""
+		DisplayName: Essence of Fire
+		Tooltip: Material
+	}
+
+	AncientEssence: {
+		DisplayName: Essence of Ancients
+		Tooltip: Material
+	}
+
+	ArcaneEssence: {
+		DisplayName: Essence of Arcane
+		Tooltip: Material
+	}
+
+	LifeEssence: {
+		DisplayName: Essence of Life
+		Tooltip: Material
+	}
+
+	StormEssence: {
+		DisplayName: Essence of Storm
+		Tooltip: Material
 	}
 }
 
