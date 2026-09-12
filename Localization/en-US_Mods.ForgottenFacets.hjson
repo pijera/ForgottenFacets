@@ -38,37 +38,42 @@ Items: {
 
 	WaterEssence: {
 		DisplayName: Essence of Water
-		Tooltip: Material
+		Tooltip: Essence carried by the endless sea
 	}
 
 	EarthEssence: {
 		DisplayName: Essence of Earth
-		Tooltip: Material
+		Tooltip: Essence born from stone and soil
 	}
 
 	FireEssence: {
 		DisplayName: Essence of Fire
-		Tooltip: Material
+		Tooltip: Essence born from eternal flame
 	}
 
 	AncientEssence: {
 		DisplayName: Essence of Ancients
-		Tooltip: Material
+		Tooltip: Essence of life preserved through ages
 	}
 
 	ArcaneEssence: {
 		DisplayName: Essence of Arcane
-		Tooltip: Material
+		Tooltip: Essence of forgotten magical forces
 	}
 
 	LifeEssence: {
 		DisplayName: Essence of Life
-		Tooltip: Material
+		Tooltip: Essence of nature's eternal growth
 	}
 
 	StormEssence: {
 		DisplayName: Essence of Storm
-		Tooltip: Material
+		Tooltip: Essence of raging skies
+	}
+
+	Aquamarine: {
+		DisplayName: Aquamarine
+		Tooltip: ""
 	}
 }
 
@@ -89,3 +94,5 @@ Projectiles: {
 	FrostBlasterMediumProjectile.DisplayName: Frost Blaster Medium Projectile
 	FrostBlasterStrongProjectile.DisplayName: Frost Blaster Strong Projectile
 }
+
+Tiles.AquamarineExposed.MapEntry: Aquamarine Exposed

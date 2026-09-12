@@ -1,4 +1,5 @@
 ﻿using ForgottenFacets.Content.Materials;
+using ForgottenFacets.Content.Materials.Gems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,8 +32,8 @@ namespace ForgottenFacets.Content.Items.Armor.AncientIce
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<AncientIceBar>(), 20)
-                .AddIngredient(ItemID.Sapphire, 3)
+                .AddIngredient(ItemID.SilverGreaves)
+                .AddIngredient(ModContent.ItemType<Aquamarine>(), 5)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

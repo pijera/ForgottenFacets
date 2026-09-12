@@ -1,4 +1,5 @@
 ﻿using ForgottenFacets.Content.Materials;
+using ForgottenFacets.Content.Materials.Gems;
 using ForgottenFacets.Content.Projectiles.FrostBlasterProjectiles;
 using Microsoft.Xna.Framework;
 using System;
@@ -62,7 +63,8 @@ namespace ForgottenFacets.Content.Items.Weapons.Ranged
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<AncientIceBar>(), 10)
+                .AddIngredient(ItemID.SilverBar, 10)
+                .AddIngredient(ModContent.ItemType<Aquamarine>(),5)
                 .AddIngredient(ItemID.BorealWood, 15)
                 .AddTile(TileID.Anvils)
                 .Register();

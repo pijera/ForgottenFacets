@@ -200,8 +200,8 @@ namespace ForgottenFacets.Core
         {
             if (WaterEssenceDroppers.Contains(npc.type))
             {
-                IItemDropRule classicRule = ItemDropRule.Common(ModContent.ItemType<WaterEssence>(), 4, 1, 3);
-                IItemDropRule expertRule = ItemDropRule.Common(ModContent.ItemType<WaterEssence>(), 3, 1, 3);
+                IItemDropRule classicRule = ItemDropRule.Common(ModContent.ItemType<WaterEssence>(), 5, 1, 2);
+                IItemDropRule expertRule = ItemDropRule.Common(ModContent.ItemType<WaterEssence>(), 4, 1, 2);
 
                 IItemDropRule difficultyScaling = new DropBasedOnExpertMode(classicRule, expertRule);
 
@@ -210,8 +210,8 @@ namespace ForgottenFacets.Core
 
             if (FireEssenceDroppers.Contains(npc.type))
             {
-                IItemDropRule classicRule = ItemDropRule.Common(ModContent.ItemType<FireEssence>(), 4, 1, 3);
-                IItemDropRule expertRule = ItemDropRule.Common(ModContent.ItemType<FireEssence>(), 3, 1, 3);
+                IItemDropRule classicRule = ItemDropRule.Common(ModContent.ItemType<FireEssence>(), 5, 1, 2);
+                IItemDropRule expertRule = ItemDropRule.Common(ModContent.ItemType<FireEssence>(), 4, 1, 2);
 
                 IItemDropRule difficultyScaling = new DropBasedOnExpertMode(classicRule, expertRule);
 
@@ -220,8 +220,8 @@ namespace ForgottenFacets.Core
 
             if (EarthEssenceDroppers.Contains(npc.type))
             {
-                IItemDropRule classicRule = ItemDropRule.Common(ModContent.ItemType<EarthEssence>(), 4, 1, 3);
-                IItemDropRule expertRule = ItemDropRule.Common(ModContent.ItemType<EarthEssence>(), 3, 1, 3);
+                IItemDropRule classicRule = ItemDropRule.Common(ModContent.ItemType<EarthEssence>(), 5, 1, 2);
+                IItemDropRule expertRule = ItemDropRule.Common(ModContent.ItemType<EarthEssence>(), 4, 1, 2);
 
                 IItemDropRule difficultyScaling = new DropBasedOnExpertMode(classicRule, expertRule);
 
@@ -230,8 +230,8 @@ namespace ForgottenFacets.Core
 
             if (LifeEssenceDroppers.Contains(npc.type))
             {
-                IItemDropRule classicRule = ItemDropRule.Common(ModContent.ItemType<LifeEssence>(), 4, 1, 3);
-                IItemDropRule expertRule = ItemDropRule.Common(ModContent.ItemType<LifeEssence>(), 3, 1, 3);
+                IItemDropRule classicRule = ItemDropRule.Common(ModContent.ItemType<LifeEssence>(), 5, 1, 2);
+                IItemDropRule expertRule = ItemDropRule.Common(ModContent.ItemType<LifeEssence>(), 4, 1, 2);
 
                 IItemDropRule difficultyScaling = new DropBasedOnExpertMode(classicRule, expertRule);
 
@@ -240,8 +240,8 @@ namespace ForgottenFacets.Core
 
             if (StormEssenceDroppers.Contains(npc.type))
             {
-                IItemDropRule classicRule = ItemDropRule.Common(ModContent.ItemType<StormEssence>(), 4, 1, 3);
-                IItemDropRule expertRule = ItemDropRule.Common(ModContent.ItemType<StormEssence>(), 3, 1, 3);
+                IItemDropRule classicRule = ItemDropRule.Common(ModContent.ItemType<StormEssence>(), 5, 1, 2);
+                IItemDropRule expertRule = ItemDropRule.Common(ModContent.ItemType<StormEssence>(), 4, 1, 2);
 
                 IItemDropRule difficultyScaling = new DropBasedOnExpertMode(classicRule, expertRule);
 
@@ -249,8 +249,8 @@ namespace ForgottenFacets.Core
             }
             if (ArcaneEssenceDroppers.Contains(npc.type))
             {
-                IItemDropRule classicRule = ItemDropRule.Common(ModContent.ItemType<ArcaneEssence>(), 4, 1, 3);
-                IItemDropRule expertRule = ItemDropRule.Common(ModContent.ItemType<ArcaneEssence>(), 3, 1, 3);
+                IItemDropRule classicRule = ItemDropRule.Common(ModContent.ItemType<ArcaneEssence>(), 5, 1, 2);
+                IItemDropRule expertRule = ItemDropRule.Common(ModContent.ItemType<ArcaneEssence>(), 4, 1, 2);
 
                 IItemDropRule difficultyScaling = new DropBasedOnExpertMode(classicRule, expertRule);
 
@@ -258,8 +258,8 @@ namespace ForgottenFacets.Core
             }
             if (AncientEssenceDroppers.Contains(npc.type))
             {
-                IItemDropRule classicRule = ItemDropRule.Common(ModContent.ItemType<AncientEssence>(), 4, 1, 3);
-                IItemDropRule expertRule = ItemDropRule.Common(ModContent.ItemType<AncientEssence>(), 3, 1, 3);
+                IItemDropRule classicRule = ItemDropRule.Common(ModContent.ItemType<AncientEssence>(), 5, 1, 2);
+                IItemDropRule expertRule = ItemDropRule.Common(ModContent.ItemType<AncientEssence>(), 4, 1, 2);
 
                 IItemDropRule difficultyScaling = new DropBasedOnExpertMode(classicRule, expertRule);
 
