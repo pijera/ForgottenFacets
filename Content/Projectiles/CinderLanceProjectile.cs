@@ -1,5 +1,6 @@
 ﻿using ForgottenFacets.Content.ModPlayers;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.GameContent.Tile_Entities;
@@ -86,6 +87,7 @@ namespace ForgottenFacets.Content.Projectiles
 
             HeatStacking.AddHeat(2);
         }
+
     }
 
 }

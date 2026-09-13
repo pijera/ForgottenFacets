@@ -54,7 +54,7 @@ namespace ForgottenFacets.Content.Items.Weapons.Melee
 
             if (HeatStacking.IsSuperHeated)
             {
-                Projectile.NewProjectile(source, spawnPostion + new Vector2(0,-25), velocity * 8, ModContent.ProjectileType<CinderLanceFullHeatProjectile>(), damage + 15, knockback + 3, player.whoAmI);
+                Projectile.NewProjectile(source, spawnPostion + new Vector2(0,-20), velocity * 8, ModContent.ProjectileType<CinderLanceFullHeatProjectile>(), damage/3, knockback + 3, player.whoAmI);
                 HeatStacking.ConsumeHeat();
             }
             else
