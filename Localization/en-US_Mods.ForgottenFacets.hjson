@@ -75,6 +75,11 @@ Items: {
 		DisplayName: Aquamarine
 		Tooltip: ""
 	}
+
+	Cinderlance: {
+		DisplayName: Cinderlance
+		Tooltip: ""
+	}
 }
 
 Buffs: {
@@ -93,6 +98,8 @@ Projectiles: {
 	FrostBlasterVeryWeakProjectile.DisplayName: Frost Blaster Very Weak Projectile
 	FrostBlasterMediumProjectile.DisplayName: Frost Blaster Medium Projectile
 	FrostBlasterStrongProjectile.DisplayName: Frost Blaster Strong Projectile
+	CinderLanceProjectile.DisplayName: Cinder Lance Projectile
+	CinderLanceFullHeatProjectile.DisplayName: Cinder Lance Full Heat Projectile
 }
 
 Tiles.AquamarineExposed.MapEntry: Aquamarine Exposed
