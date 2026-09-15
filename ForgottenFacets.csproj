@@ -13,7 +13,6 @@
 	  <Folder Include="Assets\Materials\Bars\" />
 	  <Folder Include="Assets\NPCs\" />
 	  <Folder Include="Content\Items\Accessories\" />
-	  <Folder Include="Content\Items\Weapons\Magic\" />
 	  <Folder Include="Content\Items\Weapons\Summoner\" />
 	  <Folder Include="Content\NPCs\" />
 	</ItemGroup>

@@ -10,7 +10,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace ForgottenFacets.Content.Projectiles.FrostBlasterProjectiles;
+namespace ForgottenFacets.Content.Projectiles.Aquamarine.FrostBlasterProjectiles;
 
 internal class FrostBlasterWeakProjectile : ModProjectile
 {

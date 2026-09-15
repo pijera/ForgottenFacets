@@ -12,7 +12,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace ForgottenFacets.Content.Projectiles
+namespace ForgottenFacets.Content.Projectiles.Aquamarine
 {
     internal class AncientIceArmorProjectile : ModProjectile
     {

@@ -20,7 +20,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Social.Base;
 
-namespace ForgottenFacets.Content.Projectiles.FrostBlasterProjectiles
+namespace ForgottenFacets.Content.Projectiles.Aquamarine.FrostBlasterProjectiles
 {
     internal class FrostBlasterHoldOut : ModProjectile
     {

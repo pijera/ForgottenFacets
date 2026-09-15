@@ -1,6 +1,6 @@
 ﻿using ForgottenFacets.Content.Materials;
 using ForgottenFacets.Content.Materials.Gems;
-using ForgottenFacets.Content.Projectiles.FrostBlasterProjectiles;
+using ForgottenFacets.Content.Projectiles.Aquamarine.FrostBlasterProjectiles;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;

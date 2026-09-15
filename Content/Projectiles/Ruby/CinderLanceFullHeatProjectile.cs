@@ -4,14 +4,17 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static tModPorter.ProgressUpdate;
 
-namespace ForgottenFacets.Content.Projectiles
+namespace ForgottenFacets.Content.Projectiles.Ruby
 {
     internal class CinderLanceFullHeatProjectile : ModProjectile
     {
@@ -26,10 +29,14 @@ namespace ForgottenFacets.Content.Projectiles
             get => (int)Projectile.ai[1];
             set => Projectile.ai[1] = value;
         }
+        private bool isExploding;
 
         private int explosinTimer = 0;
         private const int TimeBeforeExplosion = 180;
         private Vector2 drawDirection;
+
+
+        private Vector2 stuckOffset;
 
         public override string Texture => "ForgottenFacets/Assets/Projectiles/CinderLanceFullHeatProjectile";
 
@@ -41,8 +48,8 @@ namespace ForgottenFacets.Content.Projectiles
             Projectile.timeLeft = 600;
             Projectile.aiStyle = -1;
 
-            Projectile.width = 15;
-            Projectile.height = 15;
+            Projectile.width = 20;
+            Projectile.height = 20;
 
             Projectile.scale *= 1.3f;
 
@@ -65,12 +72,14 @@ namespace ForgottenFacets.Content.Projectiles
                 if (StuckTargetIndex >= 0)
                 {
                     NPC target = Main.npc[StuckTargetIndex];
+
                     if (!target.active)
                     {
                         Projectile.Kill();
                         return;
                     }
-
+                    target.AddBuff(BuffID.OnFire, 120);
+                    Projectile.Center = target.Center + stuckOffset;
                     Projectile.velocity = Vector2.Zero;
                 }
                 else
@@ -86,6 +95,7 @@ namespace ForgottenFacets.Content.Projectiles
             Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<GlowDust>(), Main.rand.NextVector2Circular(2, 2), 100, Color.Red, Main.rand.NextFloat(0.9f, 1.4f));
 
 
+
             Lighting.AddLight(Projectile.Center, 1f, 0f, 0f);
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 + MathHelper.PiOver4;
         }
@@ -94,20 +104,27 @@ namespace ForgottenFacets.Content.Projectiles
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            if (isExploding)
+            {
+                target.AddBuff(BuffID.OnFire, 120);
+                return;
+            }
+
             if (!IsStuck)
             {
                 drawDirection = Projectile.velocity.SafeNormalize(Vector2.UnitX);
 
+                stuckOffset = Projectile.Center - target.Center;
+
                 IsStuck = true;
                 StuckTargetIndex = target.whoAmI;
                 Projectile.tileCollide = false;
-
-
             }
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
+
             if (!IsStuck)
             {
                 drawDirection = oldVelocity.SafeNormalize(Vector2.UnitX);
@@ -122,18 +139,23 @@ namespace ForgottenFacets.Content.Projectiles
         public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
+            SoundEngine.PlaySound(SoundID.Item45 with { Volume = 1.2f, PitchRange = (-0.8f, 0.8f) });
 
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < 80; i++)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 120, default, 3f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 120, Color.DarkGray, Main.rand.NextFloat(0.9f,1.9f));
                 dust.velocity *= 1.5f;
+                
             }
 
-            for (int i = 0; i < 120; i++)
+            for (int i = 0; i < 80; i++)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center,DustID.Torch,Main.rand.NextVector2Circular(3,3),120,default,2f);
-                dust.noGravity = false;
-                dust.velocity *= 2.5f;
+                Dust.NewDustPerfect(Projectile.Center,DustID.Torch,Main.rand.NextVector2Circular(3,3) * 2.5f,120,default, Main.rand.NextFloat(1f, 3f)).noGravity = false;
+            }
+            for (int i = 0; i < 50; i++)
+            {
+                Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<GlowDust>(), Main.rand.NextVector2Circular(5, 5) * 2.5f, 120, Color.Yellow, Main.rand.NextFloat(1f, 3f));
+                Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<SparkleDust>(), Main.rand.NextVector2Circular(5, 5) * 2.5f, 120, Color.Orange, Main.rand.NextFloat(1f, 3f));
             }
 
             Projectile.position = Projectile.Center;
@@ -141,8 +163,10 @@ namespace ForgottenFacets.Content.Projectiles
             Projectile.height = 200;
             Projectile.Center = Projectile.position;
 
-            Projectile.damage = 65;
+            isExploding = true;
+            Projectile.damage = 80;
             Projectile.Damage();
+            isExploding = false;
         }
 
 
@@ -155,6 +179,7 @@ namespace ForgottenFacets.Content.Projectiles
             Vector2 drawPosition = Projectile.Center - direction * 60f - Vector2.UnitY * 3f;
 
             Main.EntitySpriteDraw(texture, drawPosition - Main.screenPosition, null, lightColor, Projectile.rotation, texture.Size() / 2f, Projectile.scale, SpriteEffects.None, 0);
+
 
             return false;
         }

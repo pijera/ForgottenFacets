@@ -7,18 +7,19 @@ using Terraria.GameContent.Tile_Entities;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace ForgottenFacets.Content.Projectiles
+namespace ForgottenFacets.Content.Projectiles.Ruby
 {
     internal class CinderLanceProjectile : ModProjectile
     {
         public override string Texture => "ForgottenFacets/Assets/Projectiles/CinderLanceProjectile";
 
-        protected virtual float HoldoutRangeMin => 40f;
-        protected virtual float HoldoutRangeMax => 120f;
+        protected virtual float HoldoutRangeMin => 20f;
+        protected virtual float HoldoutRangeMax => 180f;
 
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.Spear);
+
         }
         public override bool PreAI()
         {
@@ -85,7 +86,7 @@ namespace ForgottenFacets.Content.Projectiles
             SuperHeatingWeapons HeatStacking = Main.player[Projectile.owner].GetModPlayer<SuperHeatingWeapons>();
 
 
-            HeatStacking.AddHeat(2);
+            HeatStacking.AddHeat(8);
         }
 
     }

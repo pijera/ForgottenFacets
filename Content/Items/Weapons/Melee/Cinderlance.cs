@@ -1,5 +1,5 @@
 ﻿using ForgottenFacets.Content.ModPlayers;
-using ForgottenFacets.Content.Projectiles;
+using ForgottenFacets.Content.Projectiles.Ruby;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -35,7 +35,7 @@ namespace ForgottenFacets.Content.Items.Weapons.Melee
             Item.useTime = 25;
             Item.UseSound = SoundID.Item1 with { Volume = 0.8f, PitchRange = (0.1f, 0.3f) };
 
-            Item.damage = 30;
+            Item.damage = 33;
             Item.knockBack = 6.5f;
             Item.noUseGraphic = true;
             Item.DamageType = DamageClass.Melee;
@@ -54,7 +54,9 @@ namespace ForgottenFacets.Content.Items.Weapons.Melee
 
             if (HeatStacking.IsSuperHeated)
             {
-                Projectile.NewProjectile(source, spawnPostion + new Vector2(0,-20), velocity * 8, ModContent.ProjectileType<CinderLanceFullHeatProjectile>(), damage/3, knockback + 3, player.whoAmI);
+                SoundEngine.PlaySound(SoundID.Item20 with { Volume = 1.2f, PitchRange=(-1.2f,1.2f)});
+                SoundEngine.PlaySound(SoundID.Item42 with { Volume = 0.8f, PitchRange = (-0.8f, 0.8f) });
+                Projectile.NewProjectile(source, spawnPostion - new Vector2(-5,-5), velocity * 8, ModContent.ProjectileType<CinderLanceFullHeatProjectile>(), damage/2, knockback + 3, player.whoAmI);
                 HeatStacking.ConsumeHeat();
             }
             else

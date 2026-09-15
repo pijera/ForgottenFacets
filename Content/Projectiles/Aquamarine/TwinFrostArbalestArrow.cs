@@ -11,7 +11,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace ForgottenFacets.Content.Projectiles
+namespace ForgottenFacets.Content.Projectiles.Aquamarine
 {
     internal class TwinFrostArbalestArrow : ModProjectile
     {

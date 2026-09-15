@@ -1,7 +1,7 @@
 ﻿using ForgottenFacets.Content.Dusts;
 using ForgottenFacets.Content.Materials;
 using ForgottenFacets.Content.Materials.Gems;
-using ForgottenFacets.Content.Projectiles;
+using ForgottenFacets.Content.Projectiles.Aquamarine;
 using ForgottenFacets.Core;
 using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;

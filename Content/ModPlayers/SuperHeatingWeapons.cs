@@ -1,10 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ForgottenFacets.Content.Items.Weapons.Melee;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -18,14 +20,31 @@ namespace ForgottenFacets.Content.ModPlayers
 
         private int heatDecayTimer;
 
+
+        private static readonly HashSet<int> heatWeapons = new()
+        {
+            ModContent.ItemType<Cinderlance>()
+        };
+
+
         public void AddHeat(int amount)
         {
+            int oldHeat = Heat;
+
             Heat += amount;
 
             if (Heat > 100)
                 Heat = 100;
 
             heatDecayTimer = 0;
+
+            if (oldHeat < 100 && Heat == 100)
+            {
+                SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath with { Volume = 2f, PitchRange = (-0.8f, 0.8f) });
+                SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack with { Volume = 2f, PitchRange = (-0.8f, 0.8f) });
+            }
+                
+
         }
 
         public bool ConsumeHeat()
@@ -38,6 +57,9 @@ namespace ForgottenFacets.Content.ModPlayers
 
             return true;
         }
+
+        public bool isHoldingHeatWeapon() => heatWeapons.Contains(Player.HeldItem.type);
+
 
         public override void PostUpdate()
         {
@@ -83,7 +105,6 @@ namespace ForgottenFacets.Content.ModPlayers
             }
             if (Heat == 100)
             {
-
                 if (Main.rand.NextBool(2))
                 {
                     Dust.NewDustPerfect(position, DustID.Smoke, new Vector2(Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(-4f, -1f)), 150, Color.DarkGray, Main.rand.NextFloat(1f, 1.5f));
@@ -92,7 +113,6 @@ namespace ForgottenFacets.Content.ModPlayers
                 Player.AddBuff(BuffID.OnFire, 1);
             }
 
-            Main.NewText(Heat);
         }
 
         public override void UpdateDead()
@@ -100,5 +120,8 @@ namespace ForgottenFacets.Content.ModPlayers
             Heat = 0;
             heatDecayTimer = 0;
         }
+
+
+
     }
 }
