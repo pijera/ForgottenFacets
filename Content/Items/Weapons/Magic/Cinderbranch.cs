@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -24,7 +25,7 @@ namespace ForgottenFacets.Content.Items.Weapons.Magic
             Item.SetWeaponValues(26,3);
             Item.mana = 5;
 
-            Item.UseSound = SoundID.Item34 with { Volume = Main.rand.NextFloat(0.6f, 0.8f), Pitch = Main.rand.NextFloat(0.8f, 1f) };
+            Item.UseSound = SoundID.Item34 with { Volume = Main.rand.NextFloat(0.3f, 0.5f), Pitch = Main.rand.NextFloat(-1.2f, 0.4f) };
             Item.useStyle = ItemUseStyleID.Shoot;
 
             Item.useTime = 20;

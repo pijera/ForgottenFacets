@@ -1,4 +1,5 @@
-﻿using ForgottenFacets.Content.Items.Weapons.Melee;
+﻿using ForgottenFacets.Content.Items.Weapons.Magic;
+using ForgottenFacets.Content.Items.Weapons.Melee;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace ForgottenFacets.Content.ModPlayers
 {
     internal class SuperHeatingWeapons : ModPlayer
     {
-        public int Heat { get; private set; }
+        public float Heat { get; private set; }
 
         public bool IsSuperHeated => Heat >= 100;
 
@@ -23,13 +24,14 @@ namespace ForgottenFacets.Content.ModPlayers
 
         private static readonly HashSet<int> heatWeapons = new()
         {
-            ModContent.ItemType<Cinderlance>()
+            ModContent.ItemType<Cinderlance>(),
+            ModContent.ItemType<Cinderbranch>()
         };
 
 
-        public void AddHeat(int amount)
+        public void AddHeat(float amount)
         {
-            int oldHeat = Heat;
+            float oldHeat = Heat;
 
             Heat += amount;
 
@@ -40,11 +42,8 @@ namespace ForgottenFacets.Content.ModPlayers
 
             if (oldHeat < 100 && Heat == 100)
             {
-                SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath with { Volume = 2f, PitchRange = (-0.8f, 0.8f) });
-                SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack with { Volume = 2f, PitchRange = (-0.8f, 0.8f) });
+                SoundEngine.PlaySound(SoundID.Item25 with { Volume = 0.5f, PitchRange = (0.4f,1f) });
             }
-                
-
         }
 
         public bool ConsumeHeat()

@@ -107,6 +107,7 @@ Projectiles: {
 	CinderLanceFullHeatProjectile.DisplayName: Cinder Lance Full Heat Projectile
 	CinderbranchHoldOut.DisplayName: Cinderbranch Hold Out
 	CinderbranchProjectile.DisplayName: Cinderbranch Projectile
+	CinderbranchFullHeatExplosion.DisplayName: Cinderbranch Full Heat Explosion
 }
 
 Tiles.AquamarineExposed.MapEntry: Aquamarine Exposed

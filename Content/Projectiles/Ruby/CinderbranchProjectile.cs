@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ForgottenFacets.Content.ModPlayers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
@@ -20,7 +21,7 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
 
             Projectile.penetrate = 2;
             Projectile.timeLeft = 30;
-            Projectile.tileCollide = false;
+            Projectile.tileCollide = true;
 
             Projectile.rotation = Main.rand.NextFloat(6.28f);
 
@@ -32,7 +33,6 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
 
         public override void AI()
         {
-            Projectile.rotation += Projectile.velocity.Length() * 0.02f;
 
             Lighting.AddLight(Projectile.Center, 0.8f, 0.81f, 0.31f);
 
@@ -52,12 +52,17 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            SuperHeatingWeapons HeatStacking = Main.player[Projectile.owner].GetModPlayer<SuperHeatingWeapons>();
+
+            HeatStacking.AddHeat(2f);
+
             for (int i = 0; i < 5; i++)
             {
                 Dust poisonDust = Dust.NewDustPerfect(Projectile.Center, DustID.Torch, Main.rand.NextVector2Circular(1.5f, 1.5f), Main.rand.Next(100, 201), default, Main.rand.NextFloat(0.5f, 1.5f));
             }
 
             target.AddBuff(BuffID.OnFire, 150);
+
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -68,10 +73,19 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
 
             float progress = 1f - Projectile.timeLeft / 30f;
 
-            drawColor = Color.Lerp(Color.Yellow, Color.Red, progress * 1.5f);
+            drawColor = Color.Lerp(Color.Yellow, Color.OrangeRed, progress * 1.5f);
 
-            Main.spriteBatch.Draw(tex, Projectile.Center - Main.screenPosition, frame, drawColor * 0.9f, Projectile.rotation, frame.Size() * MathHelper.Lerp(1f, 1.6f, progress) / 2f,
-                Projectile.scale * MathHelper.Lerp(0.3f, 1.2f, progress), SpriteEffects.None, 0f);
+
+            float fadeIn;
+            if (progress < 0.5f)
+
+                fadeIn = progress / 0.5f;
+            else
+                fadeIn = 1f - (progress - 0.5f) / 0.5f;
+
+
+            Main.spriteBatch.Draw(tex, Projectile.Center - Main.screenPosition, frame, drawColor * (fadeIn * 1.2f), Projectile.rotation, frame.Size() * MathHelper.Lerp(1f, 1.6f, progress) / 2f,
+                Projectile.scale * MathHelper.Lerp(0.3f, 0.8f, progress), SpriteEffects.None, 0f);
             return false;
 
         }
