@@ -38,6 +38,9 @@ namespace ForgottenFacets.Content.Items.Weapons.Magic
             Item.noUseGraphic = true;
             Item.channel = true;
 
+            Item.rare = ItemRarityID.Orange;
+            Item.value = Item.sellPrice(0, 1, 0, 0);
+
             Item.scale = 0.9f;
         }
     }

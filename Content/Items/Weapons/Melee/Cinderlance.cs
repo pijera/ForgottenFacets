@@ -28,7 +28,7 @@ namespace ForgottenFacets.Content.Items.Weapons.Melee
         public override void SetDefaults()
         {
             Item.rare = ItemRarityID.Orange;
-            Item.value = Item.sellPrice();
+            Item.value = Item.sellPrice(0,1,0,0);
 
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.useAnimation = 25;
