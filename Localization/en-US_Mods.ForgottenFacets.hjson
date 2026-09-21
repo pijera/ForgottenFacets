@@ -114,6 +114,7 @@ Projectiles: {
 	CinderbranchProjectile.DisplayName: Cinderbranch Projectile
 	CinderbranchFullHeatExplosion.DisplayName: Cinderbranch Full Heat Explosion
 	CinderSickleProjectile.DisplayName: Cinder Sickle Projectile
+	CinderSickleFullHeatProjectile.DisplayName: Cinder Sickle Full Heat Projectile
 }
 
 Tiles.AquamarineExposed.MapEntry: Aquamarine Exposed

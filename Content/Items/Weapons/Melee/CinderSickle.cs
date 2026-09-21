@@ -1,6 +1,8 @@
-﻿using ForgottenFacets.Content.Projectiles.Ruby;
+﻿using ForgottenFacets.Content.ModPlayers;
+using ForgottenFacets.Content.Projectiles.Ruby;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -38,9 +40,22 @@ namespace ForgottenFacets.Content.Items.Weapons.Melee
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, Main.myPlayer, attackType);
-            attackType = (attackType + 1) % 3;
-            comboExpireTimer = 0;
+            SuperHeatingWeapons HeatStacking = player.GetModPlayer<SuperHeatingWeapons>();
+            Vector2 spawnPostion = position + velocity.SafeNormalize(Vector2.Zero) * 20f;
+
+            if (HeatStacking.IsSuperHeated)
+            {
+                SoundEngine.PlaySound(SoundID.Item20 with { Volume = 1.2f, PitchRange = (-1.2f, 1.2f) });
+                SoundEngine.PlaySound(SoundID.Item42 with { Volume = 0.8f, PitchRange = (-0.8f, 0.8f) });
+                Projectile.NewProjectile(source, spawnPostion - new Vector2(-5, -5), velocity * 8, ModContent.ProjectileType<CinderSickleFullHeatProjectile>(), damage, knockback + 3, player.whoAmI);
+                HeatStacking.ConsumeHeat();
+            }
+            else
+            {
+                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, Main.myPlayer, attackType);
+                attackType = (attackType + 1) % 3;
+                comboExpireTimer = 0;
+            }
             return false;
         }
 

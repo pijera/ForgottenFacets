@@ -1,36 +1,35 @@
-﻿using ForgottenFacets.Content.ModPlayers;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Tile_Entities;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace ForgottenFacets.Content.Projectiles.Ruby
 {
-    internal class CinderSickleProjectile : ModProjectile
+    internal class CinderSickleFullHeatProjectile : ModProjectile
     {
-
         private const float SWINGRANGE = 1.67f * (float)Math.PI;
         private const float FIRSTHALFSWING = 0.45f;
-        private const float SPINRANGE = 3.5f * (float)Math.PI;
-        private const float WINDUP = 0.15f;
-        private const float UNWIND = 0.4f;
-        private const float SPINTIME = 2.5f;
+        private const float WINDUP = 0.1f;
+        private const float UNWIND = 0.2f;
+
+        private const float DASHSPEED = 15f;
 
         public override string Texture => "ForgottenFacets/Assets/Items/Weapons/Meele/CinderSickle";
 
-
         private enum AttackType
         {
-            Swing1,
-            Swing2,
-            Spin
+            Swing
         }
 
         private enum AttackStage
@@ -40,7 +39,8 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
             Unwind
         }
 
-        private AttackType CurrentAttack {
+        private AttackType CurrentAttack
+        {
             get => (AttackType)Projectile.ai[0];
             set => Projectile.ai[0] = (float)value;
         }
@@ -89,22 +89,17 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
             Projectile.spriteDirection = Main.MouseWorld.X > Owner.MountedCenter.X ? 1 : -1;
             float targetAngle = (Main.MouseWorld - Owner.MountedCenter).ToRotation();
 
-            if (CurrentAttack == AttackType.Spin)
-                InitialAngle = (float)(-Math.PI / 2 - Math.PI * 1 / 3 * Projectile.spriteDirection);
+            if (Projectile.spriteDirection == 1)
+            targetAngle = MathHelper.Clamp(targetAngle, (float)-Math.PI * 1 / 3, (float)Math.PI * 1 / 6);
             else
             {
-                if (Projectile.spriteDirection == 1)
-                    targetAngle = MathHelper.Clamp(targetAngle, (float)-Math.PI * 1 / 3, (float)Math.PI * 1 / 6);
-                else
-                {
-                    if (targetAngle < 0)
-                        targetAngle += 2 * (float)Math.PI;
-
-                    targetAngle = MathHelper.Clamp(targetAngle, (float)Math.PI * 5 / 6, (float)Math.PI * 4 / 3);
-                }
-
-                InitialAngle = targetAngle - FIRSTHALFSWING * SWINGRANGE * Projectile.spriteDirection;
+                if (targetAngle < 0)
+                    targetAngle += 2 * (float)Math.PI;
+                targetAngle = MathHelper.Clamp(targetAngle, (float)Math.PI * 5 / 6, (float)Math.PI * 4 / 3);
             }
+
+            InitialAngle = targetAngle - FIRSTHALFSWING * SWINGRANGE * Projectile.spriteDirection;
+            
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -124,7 +119,6 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
             Owner.itemAnimation = 2;
             Owner.itemTime = 2;
 
-            Projectile.scale *= SWINGRANGE;
 
             if (!Owner.active || Owner.dead || Owner.noItems || Owner.CCed)
             {
@@ -135,6 +129,7 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
             switch (CurrentStage)
             {
                 case AttackStage.Prepare:
+                    Dash();
                     PrepareStrike();
                     break;
                 case AttackStage.Execute:
@@ -166,21 +161,45 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
             Vector2 origin;
             float rotationOffset;
             SpriteEffects effects;
+            Texture2D swoosh = ModContent.Request<Texture2D>("ForgottenFacets/Assets/Misc/Smears/VerticalSmearLarge").Value;
+
 
             if (Projectile.spriteDirection > 0)
             {
                 origin = new Vector2(0, Projectile.height);
                 rotationOffset = MathHelper.ToRadians(45f);
+
+                float FinalRotation = Projectile.rotation + rotationOffset;
+
                 effects = SpriteEffects.None;
+
+                if (CurrentStage == AttackStage.Execute)
+                {
+                    Main.EntitySpriteDraw(swoosh, Projectile.Center - Main.screenPosition + new Vector2(0, Owner.gfxOffY), null, Color.OrangeRed with { A = 0 } * 0.5f,
+                        (FinalRotation + MathHelper.ToRadians(45)) + MathHelper.ToRadians(Projectile.ai[1] == 1 ? -70 : 70) * -Owner.direction, swoosh.Size() * 0.5f, 
+                        Projectile.scale * 0.25f, SpriteEffects.None);
+                }
             }
             else
             {
                 origin = new Vector2(Projectile.width, Projectile.height);
                 rotationOffset = MathHelper.ToRadians(135f);
                 effects = SpriteEffects.FlipHorizontally;
+
+                float FinalRotation = Projectile.rotation + rotationOffset;
+
+                if (CurrentStage == AttackStage.Execute)
+                {
+                    Main.EntitySpriteDraw(swoosh, Projectile.Center - Main.screenPosition + new Vector2(0, Owner.gfxOffY), null, Color.OrangeRed with { A = 0 } * 0.5f,
+                        (FinalRotation + MathHelper.ToRadians(45)) + MathHelper.ToRadians(Projectile.ai[1] == 1 ? -70 : 70) * -Owner.direction, swoosh.Size() * 0.5f, 
+                        Projectile.scale * 0.25f, SpriteEffects.FlipVertically);
+                }
             }
 
+
             Texture2D texture = TextureAssets.Projectile[Type].Value;
+
+            
 
             Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, default, lightColor * Projectile.Opacity, Projectile.rotation + rotationOffset, origin, Projectile.scale, effects, 0);
             return false;
@@ -189,7 +208,7 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             Vector2 start = Owner.MountedCenter;
-            Vector2 end = start + Projectile.rotation.ToRotationVector2() * ((Projectile.Size.Length()) * Projectile.scale);
+            Vector2 end = start + Projectile.rotation.ToRotationVector2() * 180f;
             float collisonPoint = 0f;
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), start, end, 15f * Projectile.scale, ref collisonPoint);
         }
@@ -211,9 +230,6 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             modifiers.HitDirectionOverride = target.position.X > Owner.MountedCenter.X ? 1 : -1;
-
-            if (CurrentAttack == AttackType.Spin)
-                modifiers.Knockback += 1;
         }
 
         public void SetSwordPosition()
@@ -230,10 +246,15 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
             }
 
             armPosition.Y += Owner.gfxOffY;
+
+            Vector2 gripOffset = Projectile.rotation.ToRotationVector2() * -30f;
+            armPosition += gripOffset;
+
             Projectile.Center = armPosition;
-            Projectile.scale = Size * 1.5f * Owner.GetAdjustedItemScale(Owner.HeldItem);
+            Projectile.scale = Size * 3.5f * Owner.GetAdjustedItemScale(Owner.HeldItem);
             Owner.heldProj = Projectile.whoAmI;
         }
+
 
         private void PrepareStrike()
         {
@@ -247,62 +268,48 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
             }
         }
 
+        private void Dash()
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                Dust.NewDustPerfect(Owner.Center, DustID.Torch, Main.rand.NextVector2Circular(3, 3), 250, default, Main.rand.NextFloat(1f, 1.4f));
+            }
+            for(int i=0; i < 5; i++)
+            {
+                Dust.NewDustPerfect(Owner.Center, DustID.GemRuby, Main.rand.NextVector2Circular(3, 3), 200, default, Main.rand.NextFloat(1f, 1.4f));
+            }
+            if (Timer == 0)
+            {
+                SoundEngine.PlaySound(SoundID.Item74, Owner.Center);
+                Vector2 dashDirection = (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.UnitX);
+                Owner.velocity += dashDirection * DASHSPEED;
+            }
+            if (Timer >= prepTime)
+            {
+                Owner.velocity *= 0.2f;
+            }
+        }
+
+
         private void ExecuteStrike()
         {
-            if (CurrentAttack == AttackType.Swing1 || CurrentAttack == AttackType.Swing2)
-            {
                 Progress = MathHelper.SmoothStep(0, SWINGRANGE, (1f - UNWIND) * Timer / execTime);
 
                 if (Timer >= execTime)
-                    CurrentStage = AttackStage.Unwind;
-            }
-            else
-            {
-                Progress = MathHelper.SmoothStep(0, SPINRANGE, (1f - UNWIND / 2) * Timer / (execTime * SPINTIME));
-
-                if (Timer == (int)(execTime * SPINTIME * 3 / 4))
-                {
-                    SoundEngine.PlaySound(SoundID.Item1);
-                    Projectile.ResetLocalNPCHitImmunity();
-                }
-
-                if (Timer >= execTime * SPINTIME)
-                {
-                    CurrentStage = AttackStage.Unwind;
-                }
-            }
+                CurrentStage = AttackStage.Unwind;
         }
 
         private void UnwindStrike()
         {
-            if (CurrentAttack == AttackType.Swing1 || CurrentAttack == AttackType.Swing2)
-            {
-                Progress = MathHelper.SmoothStep(0, SWINGRANGE, (1f - UNWIND) + UNWIND * Timer / hideTime);
-                Size = 1f - MathHelper.SmoothStep(0, 1, Timer / hideTime);
+            Progress = MathHelper.SmoothStep(0, SWINGRANGE, (1f - UNWIND) + UNWIND * Timer / hideTime);
+            Size = 1f - MathHelper.SmoothStep(0, 1, Timer / hideTime);
 
-                if (Timer >= hideTime)
-                    Projectile.Kill();
-
-            }
-            else
-            {
-                Progress = MathHelper.SmoothStep(0, SPINRANGE, (1f - UNWIND / 2) + UNWIND / 2 * Timer / (hideTime * SPINTIME / 2));
-                Size = 1f - MathHelper.SmoothStep(0, 1, Timer / (hideTime * SPINTIME / 2));
-
-                if (Timer >= hideTime * SPINTIME / 2)
-                {
-                    Projectile.Kill();
-                }
-            }
+            if (Timer >= hideTime)
+                Projectile.Kill();
         }
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            SuperHeatingWeapons HeatStacking = Main.player[Projectile.owner].GetModPlayer<SuperHeatingWeapons>();
 
-            HeatStacking.AddHeat(3f);
-        }
+
 
 
     }
 }
-

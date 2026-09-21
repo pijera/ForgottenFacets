@@ -1,5 +1,6 @@
 ﻿using ForgottenFacets.Content.Items.Weapons.Magic;
 using ForgottenFacets.Content.Items.Weapons.Melee;
+using ForgottenFacets.Content.Projectiles.Ruby;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,8 @@ namespace ForgottenFacets.Content.ModPlayers
         private static readonly HashSet<int> heatWeapons = new()
         {
             ModContent.ItemType<Cinderlance>(),
-            ModContent.ItemType<Cinderbranch>()
+            ModContent.ItemType<Cinderbranch>(),
+            ModContent.ItemType<CinderSickle>()
         };
 
 
