@@ -1,4 +1,5 @@
 ﻿using ForgottenFacets.Content.Dusts;
+using ForgottenFacets.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -162,6 +163,9 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
             Projectile.width = 200;
             Projectile.height = 200;
             Projectile.Center = Projectile.position;
+
+            ScreenShake screen = Main.player[Projectile.owner].GetModPlayer<ScreenShake>();
+            screen.AddShake(15);
 
             isExploding = true;
             Projectile.damage = 80;

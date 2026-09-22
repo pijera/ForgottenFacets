@@ -90,6 +90,11 @@ Items: {
 		DisplayName: Cinder Sickle
 		Tooltip: ""
 	}
+
+	CinderFlintlock: {
+		DisplayName: Cinder Flintlock
+		Tooltip: ""
+	}
 }
 
 Buffs: {
@@ -115,6 +120,8 @@ Projectiles: {
 	CinderbranchFullHeatExplosion.DisplayName: Cinderbranch Full Heat Explosion
 	CinderSickleProjectile.DisplayName: Cinder Sickle Projectile
 	CinderSickleFullHeatProjectile.DisplayName: Cinder Sickle Full Heat Projectile
+	CinderFlintlockProjectile.DisplayName: Cinder Flintlock Projectile
+	CinderFlintlockFullHeatProjectile.DisplayName: Cinder Flintlock Full Heat Projectile
 }
 
 Tiles.AquamarineExposed.MapEntry: Aquamarine Exposed

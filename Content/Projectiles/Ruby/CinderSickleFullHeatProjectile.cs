@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ForgottenFacets.Content.Dusts;
+using ForgottenFacets.Core;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -114,7 +116,7 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
 
         public override void AI()
         {
-            Vector2 dustPosition = Projectile.Center + Projectile.rotation.ToRotationVector2() * 60f;
+
 
             Owner.itemAnimation = 2;
             Owner.itemTime = 2;
@@ -133,19 +135,9 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
                     PrepareStrike();
                     break;
                 case AttackStage.Execute:
-                    for (int i = 0; i < 10; i++)
-                        Dust.NewDustPerfect(dustPosition, DustID.Torch, Main.rand.NextVector2Circular(3, 3), 250, default, Main.rand.NextFloat(0.9f, 1.7f));
-
-                    for (int i = 0; i < 4; i++)
-                        Dust.NewDustPerfect(dustPosition, DustID.GemRuby, Main.rand.NextVector2Circular(3, 3), 120, default, Main.rand.NextFloat(0.5f, 1f));
-
                     ExecuteStrike();
                     break;
                 default:
-                    for (int i = 0; i < 5; i++)
-                    {
-                        Dust.NewDustPerfect(dustPosition, DustID.Torch, Main.rand.NextVector2Circular(3, 3), 120, default, Main.rand.NextFloat(0.5f, 1.2f));
-                    }
                     UnwindStrike();
                     break;
             }
@@ -270,7 +262,7 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
 
         private void Dash()
         {
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 7; i++)
             {
                 Dust.NewDustPerfect(Owner.Center, DustID.Torch, Main.rand.NextVector2Circular(3, 3), 250, default, Main.rand.NextFloat(1f, 1.4f));
             }
@@ -278,29 +270,45 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
             {
                 Dust.NewDustPerfect(Owner.Center, DustID.GemRuby, Main.rand.NextVector2Circular(3, 3), 200, default, Main.rand.NextFloat(1f, 1.4f));
             }
+
+            Dust.NewDustPerfect(Owner.Center, ModContent.DustType<SparkleDust>(), Main.rand.NextVector2Circular(3, 3), 100, Color.OrangeRed, Main.rand.NextFloat(0.7f, 1f));
+            Dust.NewDustPerfect(Owner.Center, ModContent.DustType<GlowDust>(), Main.rand.NextVector2Circular(3, 3), 100, Color.OrangeRed, Main.rand.NextFloat(0.6f, 0.9f));
             if (Timer == 0)
             {
                 SoundEngine.PlaySound(SoundID.Item74, Owner.Center);
                 Vector2 dashDirection = (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.UnitX);
-                Owner.velocity += dashDirection * DASHSPEED;
+                Owner.velocity = dashDirection * DASHSPEED;
             }
             if (Timer >= prepTime)
             {
-                Owner.velocity *= 0.2f;
+                Owner.velocity *= 0.1f;
             }
         }
 
 
         private void ExecuteStrike()
         {
-                Progress = MathHelper.SmoothStep(0, SWINGRANGE, (1f - UNWIND) * Timer / execTime);
+            Vector2 dustPosition = Projectile.Center + Projectile.rotation.ToRotationVector2() * 180f;
 
-                if (Timer >= execTime)
+            Progress = MathHelper.SmoothStep(0, SWINGRANGE, (1f - UNWIND) * Timer / execTime);
+
+            for (int i = 0; i < 30; i++)
+            {
+                Dust.NewDustPerfect(dustPosition, DustID.Torch, Main.rand.NextVector2Circular(3, 3), 250, default, Main.rand.NextFloat(1f, 1.2f));
+                Dust.NewDustPerfect(dustPosition, ModContent.DustType<SparkleDust>(), Main.rand.NextVector2Circular(3, 3), 100, Color.OrangeRed, Main.rand.NextFloat(0.6f, 1.2f));
+                Dust.NewDustPerfect(dustPosition, ModContent.DustType<GlowDust>(), Main.rand.NextVector2Circular(3, 3), 100, Color.OrangeRed, Main.rand.NextFloat(0.8f, 1.2f));
+            }
+
+            for (int i = 0; i < 4; i++)
+                Dust.NewDustPerfect(dustPosition, DustID.GemRuby, Main.rand.NextVector2Circular(3, 3), 120, default, Main.rand.NextFloat(1.5f, 2f));
+
+            if (Timer >= execTime)
                 CurrentStage = AttackStage.Unwind;
         }
 
         private void UnwindStrike()
         {
+
             Progress = MathHelper.SmoothStep(0, SWINGRANGE, (1f - UNWIND) + UNWIND * Timer / hideTime);
             Size = 1f - MathHelper.SmoothStep(0, 1, Timer / hideTime);
 
@@ -308,6 +316,13 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
                 Projectile.Kill();
         }
 
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            ScreenShake screen = Main.player[Projectile.owner].GetModPlayer<ScreenShake>();
+            screen.AddShake(15);
+
+            target.AddBuff(BuffID.OnFire, 180);
+        }
 
 
 

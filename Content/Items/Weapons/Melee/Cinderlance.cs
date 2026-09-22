@@ -46,13 +46,15 @@ namespace ForgottenFacets.Content.Items.Weapons.Melee
         }
 
         public override bool CanUseItem(Player player) => player.ownedProjectileCounts[Item.shoot] < 1;
+        public override bool AltFunctionUse(Player player) => true;
+
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             SuperHeatingWeapons HeatStacking = player.GetModPlayer<SuperHeatingWeapons>();
             Vector2 spawnPostion = position + velocity.SafeNormalize(Vector2.Zero) * 20f;
 
-            if (HeatStacking.IsSuperHeated)
+            if (HeatStacking.IsSuperHeated && player.altFunctionUse == 2)
             {
                 SoundEngine.PlaySound(SoundID.Item20 with { Volume = 1.2f, PitchRange=(-1.2f,1.2f)});
                 SoundEngine.PlaySound(SoundID.Item42 with { Volume = 0.8f, PitchRange = (-0.8f, 0.8f) });

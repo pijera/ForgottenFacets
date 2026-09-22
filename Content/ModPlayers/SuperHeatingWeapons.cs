@@ -1,5 +1,6 @@
 ﻿using ForgottenFacets.Content.Items.Weapons.Magic;
 using ForgottenFacets.Content.Items.Weapons.Melee;
+using ForgottenFacets.Content.Items.Weapons.Ranged;
 using ForgottenFacets.Content.Projectiles.Ruby;
 using Microsoft.Xna.Framework;
 using System;
@@ -27,7 +28,8 @@ namespace ForgottenFacets.Content.ModPlayers
         {
             ModContent.ItemType<Cinderlance>(),
             ModContent.ItemType<Cinderbranch>(),
-            ModContent.ItemType<CinderSickle>()
+            ModContent.ItemType<CinderSickle>(),
+            ModContent.ItemType<CinderFlintlock>()
         };
 
 

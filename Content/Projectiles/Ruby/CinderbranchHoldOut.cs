@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -121,43 +122,29 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
 
             SoundEngine.PlaySound(SoundID.Item34 with { Volume = Main.rand.NextFloat(0.3f, 0.5f), Pitch = Main.rand.NextFloat(-1.2f, 0.4f) });
 
-            ScreenShake screen = Main.player[Projectile.owner].GetModPlayer<ScreenShake>();
-            SuperHeatingWeapons HeatStacking = Main.player[Projectile.owner].GetModPlayer<SuperHeatingWeapons>();
 
-            if (HeatStacking.IsSuperHeated)
+
+            for (int i = 0; i < 20; i++)
             {
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, Vector2.Zero, ModContent.ProjectileType<CinderbranchFullHeatExplosion>(), 80, 5, Owner.whoAmI, 360f);
-                screen.AddShake(15);
-                SoundEngine.PlaySound(SoundID.Item62 with { Volume = 0.7f, PitchRange = (-0.5f, 1f) });
-                SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath with { Volume = 0.2f, PitchRange = (-0.8f, 0.8f) });
-                SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack with { Volume = 0.2f, PitchRange = (-0.8f, 0.8f) });
-                HeatStacking.ConsumeHeat();
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity.RotatedByRandom(0.25f) * Main.rand.NextFloat(8f, 12f), ModContent.ProjectileType<CinderbranchProjectile>(), 0, 0, Projectile.owner);
             }
 
-            else
+            if (Main.rand.NextBool(1))
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity.RotatedByRandom(0.25f) * Main.rand.NextFloat(8f, 12f), ModContent.ProjectileType<CinderbranchProjectile>(), Owner.HeldItem.damage, Owner.HeldItem.knockBack, Projectile.owner);
+
+
+            for (int i = 0; i < Main.rand.Next(7); i++)
             {
-                for (int i = 0; i < 20; i++)
-                {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity.RotatedByRandom(0.25f) * Main.rand.NextFloat(8f, 12f), ModContent.ProjectileType<CinderbranchProjectile>(), 0, 0, Projectile.owner);
-                }
+                Dust.NewDustPerfect(Projectile.Center + new Vector2(30f, 0f).RotatedBy(Projectile.rotation) + Main.rand.NextVector2Circular(20f, 20f), ModContent.DustType<SparkleDust>(),
+                    Projectile.velocity.RotatedByRandom(0.25f) * Main.rand.NextFloat(8f, 12f), 0,
+                    Color.Lerp(Color.Yellow, Color.OrangeRed with { A = 0 }, Main.rand.NextFloat()), Main.rand.NextFloat(0.5f, 0.6f)).customData = true;
 
-                if (Main.rand.NextBool(1))
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity.RotatedByRandom(0.25f) * Main.rand.NextFloat(8f, 12f), ModContent.ProjectileType<CinderbranchProjectile>(), Owner.HeldItem.damage, Owner.HeldItem.knockBack, Projectile.owner);
+                Dust.NewDustPerfect(Projectile.Center + new Vector2(30f, 0f).RotatedBy(Projectile.rotation) + Main.rand.NextVector2Circular(20f, 20f), ModContent.DustType<GlowDust>(),
+                    Projectile.velocity.RotatedByRandom(0.25f) * Main.rand.NextFloat(8f, 12f), 0,
+                    Color.Lerp(Color.Yellow, Color.OrangeRed with { A = 0 }, Main.rand.NextFloat()), Main.rand.NextFloat(0.5f, 0.6f)).customData = true;
 
-
-                for (int i = 0; i < Main.rand.Next(7); i++)
-                {
-                    Dust.NewDustPerfect(Projectile.Center + new Vector2(30f, 0f).RotatedBy(Projectile.rotation) + Main.rand.NextVector2Circular(20f, 20f), ModContent.DustType<SparkleDust>(),
-                        Projectile.velocity.RotatedByRandom(0.25f) * Main.rand.NextFloat(8f, 12f), 0,
-                        Color.Lerp(Color.Yellow, Color.OrangeRed with { A = 0 }, Main.rand.NextFloat()), Main.rand.NextFloat(0.5f, 0.6f)).customData = true;
-
-                    Dust.NewDustPerfect(Projectile.Center + new Vector2(30f, 0f).RotatedBy(Projectile.rotation) + Main.rand.NextVector2Circular(20f, 20f), ModContent.DustType<GlowDust>(),
-                        Projectile.velocity.RotatedByRandom(0.25f) * Main.rand.NextFloat(8f, 12f), 0,
-                        Color.Lerp(Color.Yellow, Color.OrangeRed with { A = 0 }, Main.rand.NextFloat()), Main.rand.NextFloat(0.5f, 0.6f)).customData = true;
-
-                }
             }
-            
+
 
         }
 

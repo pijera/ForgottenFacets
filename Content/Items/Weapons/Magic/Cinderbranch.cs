@@ -1,13 +1,11 @@
-﻿using ForgottenFacets.Content.Projectiles;
+﻿using ForgottenFacets.Content.ModPlayers;
+using ForgottenFacets.Content.Projectiles;
 using ForgottenFacets.Content.Projectiles.Ruby;
+using ForgottenFacets.Core;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -42,6 +40,26 @@ namespace ForgottenFacets.Content.Items.Weapons.Magic
             Item.value = Item.sellPrice(0, 1, 0, 0);
 
             Item.scale = 0.9f;
+        }
+
+        public override bool AltFunctionUse(Player player) => true;
+
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            ScreenShake screen = player.GetModPlayer<ScreenShake>();
+            SuperHeatingWeapons HeatStacking = player.GetModPlayer<SuperHeatingWeapons>();
+
+            if (HeatStacking.IsSuperHeated && player.controlUseTile)
+            {
+                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<CinderbranchFullHeatExplosion>(), 80, 5, player.whoAmI, 250f);
+                screen.AddShake(15);
+                SoundEngine.PlaySound(SoundID.Item62 with { Volume = 0.7f, PitchRange = (-0.5f, 1f) });
+                SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath with { Volume = 0.2f, PitchRange = (-0.8f, 0.8f) });
+                SoundEngine.PlaySound(SoundID.DD2_BetsyWindAttack with { Volume = 0.2f, PitchRange = (-0.8f, 0.8f) });
+                HeatStacking.ConsumeHeat();
+            }
+
+            return true;
         }
     }
 }

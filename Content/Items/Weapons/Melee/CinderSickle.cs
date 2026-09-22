@@ -38,16 +38,18 @@ namespace ForgottenFacets.Content.Items.Weapons.Melee
             Item.shoot = ModContent.ProjectileType<CinderSickleProjectile>();
         }
 
+        public override bool AltFunctionUse(Player player) => true;
+
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             SuperHeatingWeapons HeatStacking = player.GetModPlayer<SuperHeatingWeapons>();
             Vector2 spawnPostion = position + velocity.SafeNormalize(Vector2.Zero) * 20f;
 
-            if (HeatStacking.IsSuperHeated)
+            if (HeatStacking.IsSuperHeated && player.altFunctionUse == 2)
             {
                 SoundEngine.PlaySound(SoundID.Item20 with { Volume = 1.2f, PitchRange = (-1.2f, 1.2f) });
                 SoundEngine.PlaySound(SoundID.Item42 with { Volume = 0.8f, PitchRange = (-0.8f, 0.8f) });
-                Projectile.NewProjectile(source, spawnPostion - new Vector2(-5, -5), velocity * 8, ModContent.ProjectileType<CinderSickleFullHeatProjectile>(), damage, knockback + 3, player.whoAmI);
+                Projectile.NewProjectile(source, spawnPostion - new Vector2(-5, -5), velocity * 8, ModContent.ProjectileType<CinderSickleFullHeatProjectile>(), damage + 40, knockback + 10, player.whoAmI);
                 HeatStacking.ConsumeHeat();
             }
             else
