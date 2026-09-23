@@ -56,7 +56,7 @@ namespace ForgottenFacets.Content.Items.Weapons.Ranged
                 }
                 Vector2 muzzlePosition = position + velocity.SafeNormalize(Vector2.UnitX) * 30f;
                 Vector2 smokePos = muzzlePosition - new Vector2(player.direction * 10f, 0f);
-                screen.AddShake(6);
+                screen.AddShake(15);
 
                 SoundEngine.PlaySound(SoundID.Item74 with { Volume = Main.rand.NextFloat(0.9f, 1.2f), PitchRange = (0.8f, 1.2f) });
 
@@ -80,7 +80,7 @@ namespace ForgottenFacets.Content.Items.Weapons.Ranged
 
                 SoundEngine.PlaySound(SoundID.Item38 with { Volume = Main.rand.NextFloat(0.8f, 1.2f), Pitch = Main.rand.NextFloat(0.8f, 1.2f) });
 
-                float maxSpeed = 10f;
+                float maxSpeed = 8f;
                 if (player.velocity.Length() > maxSpeed)
                 {
                     player.velocity = Vector2.Normalize(player.velocity) * maxSpeed;

@@ -27,7 +27,7 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
 
         private const float DASHSPEED = 15f;
 
-        public override string Texture => "ForgottenFacets/Assets/Items/Weapons/Meele/CinderSickle";
+        public override string Texture => "ForgottenFacets/Assets/Projectiles/CinderSickleFullHeatProjectile";
 
         private enum AttackType
         {
@@ -116,7 +116,7 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
 
         public override void AI()
         {
-
+            Lighting.AddLight(Projectile.Center, 1f, 0f, 0f);
 
             Owner.itemAnimation = 2;
             Owner.itemTime = 2;

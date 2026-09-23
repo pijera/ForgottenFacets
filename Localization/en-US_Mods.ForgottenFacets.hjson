@@ -122,6 +122,8 @@ Projectiles: {
 	CinderSickleFullHeatProjectile.DisplayName: Cinder Sickle Full Heat Projectile
 	CinderFlintlockProjectile.DisplayName: Cinder Flintlock Projectile
 	CinderFlintlockFullHeatProjectile.DisplayName: Cinder Flintlock Full Heat Projectile
+	MoltenFuryChanges.DisplayName: Molten Fury Changes
+	FlamarangChanges.DisplayName: Flamarang Changes
 }
 
 Tiles.AquamarineExposed.MapEntry: Aquamarine Exposed

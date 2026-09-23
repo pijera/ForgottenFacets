@@ -29,7 +29,11 @@ namespace ForgottenFacets.Content.ModPlayers
             ModContent.ItemType<Cinderlance>(),
             ModContent.ItemType<Cinderbranch>(),
             ModContent.ItemType<CinderSickle>(),
-            ModContent.ItemType<CinderFlintlock>()
+            ModContent.ItemType<CinderFlintlock>(),
+
+            ItemID.ImpStaff,
+            ItemID.MoltenFury,
+            ItemID.Flamarang
         };
 
 
