@@ -78,22 +78,51 @@ Items: {
 
 	Cinderlance: {
 		DisplayName: Emberpiercer
-		Tooltip: ""
+		Tooltip:
+			'''
+			Hits generate a decent amount of [c/FF6428:HEAT]
+			At maximum [c/FF6428:HEAT], throw a copy of the spear
+			'A hot toothpick'
+			'''
 	}
 
 	Cinderbranch: {
 		DisplayName: Pyrebloom
-		Tooltip: ""
+		Tooltip:
+			'''
+			Casts a stream of fire
+			Hits generate a small amount of [c/FF6428:HEAT]
+			At maximum [c/FF6428:HEAT], unleash an fiery explosion
+			'''
 	}
 
 	CinderSickle: {
 		DisplayName: Hell Reaper
-		Tooltip: ""
+		Tooltip:
+			'''	
+			Hits twice before doing a spining attack
+			Hits generate a decent amount of [c/FF6428:HEAT]
+			At maximum [c/FF6428:HEAT], do a big dashing slash
+			'''
 	}
 
 	CinderFlintlock: {
 		DisplayName: Emberlock
-		Tooltip: ""
+		Tooltip:
+			'''
+			Shoots a fast bullet, knocking you backward
+			Hits generate a big amount of [c/FF6428:HEAT]
+			At maximum [c/FF6428:HEAT], shoots a massive bullet launching you backward
+			'''
+	}
+
+	FlameheartPendent: {
+		DisplayName: Flameheart Pendent
+		Tooltip:
+			'''
+			Gain powerful buffs while On Fire
+			'USE NEAR OPEN FLAMES'
+			'''
 	}
 }
 
@@ -104,8 +133,8 @@ Buffs: {
 	}
 
 	VolcanoBuff: {
-		DisplayName: Volcano Buff
-		Description: Mods.ForgottenFacets.Buffs.VolcanoBuff.Description
+		DisplayName: Fiery Rage
+		Description: Increased damage, attack speed and movment speed
 	}
 }
 
