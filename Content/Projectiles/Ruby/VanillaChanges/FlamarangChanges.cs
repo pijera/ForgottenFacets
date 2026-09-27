@@ -29,6 +29,7 @@ namespace ForgottenFacets.Content.Projectiles.Ruby.VanillaChanges
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 30;
 
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.scale *= 1.2f;
         }
 

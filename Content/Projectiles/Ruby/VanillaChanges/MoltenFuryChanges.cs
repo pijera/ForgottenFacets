@@ -25,6 +25,7 @@ namespace ForgottenFacets.Content.Projectiles.Ruby.VanillaChanges
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.penetrate = 1;
+            Projectile.DamageType = DamageClass.Ranged;
         }
 
         public override void AI()

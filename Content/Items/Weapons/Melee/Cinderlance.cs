@@ -58,7 +58,7 @@ namespace ForgottenFacets.Content.Items.Weapons.Melee
             {
                 SoundEngine.PlaySound(SoundID.Item20 with { Volume = 1.2f, PitchRange=(-1.2f,1.2f)});
                 SoundEngine.PlaySound(SoundID.Item42 with { Volume = 0.8f, PitchRange = (-0.8f, 0.8f) });
-                Projectile.NewProjectile(source, spawnPostion - new Vector2(-5,-5), velocity * 8, ModContent.ProjectileType<CinderLanceFullHeatProjectile>(), damage/2, knockback + 3, player.whoAmI);
+                Projectile.NewProjectile(source, spawnPostion - new Vector2(-5,-5), velocity * 8, ModContent.ProjectileType<CinderLanceFullHeatProjectile>(), damage/2, 0, player.whoAmI);
                 HeatStacking.ConsumeHeat();
             }
             else

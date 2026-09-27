@@ -1,1 +1,7 @@
-Modify this file with a description of your mod.
+ForgottenFacets is a Terraria mod focused on expanding existing materials and weapons with new mechanics and upgrades.
+
+The mod currently includes new gems, elemental essences, weapons, armor, accessories, and changes to several vanilla weapons.
+
+This mod is still in development, so content and mechanics may change over time.
+
+Made for fun and currently intended to be shared with friends.

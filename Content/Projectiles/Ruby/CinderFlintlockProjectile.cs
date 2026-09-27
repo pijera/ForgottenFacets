@@ -28,7 +28,7 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 
             Vector2 velocity = -Projectile.velocity.SafeNormalize(Vector2.Zero);
-            velocity += Main.rand.NextVector2Circular(0.5f, 0.5f);
+            velocity *= Main.rand.NextVector2Circular(0.5f, 0.5f);
 
 
             for (int i = 0; i < 8; i++)
@@ -51,7 +51,7 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
             SoundEngine.PlaySound(SoundID.Item10 with { Volume = 1.2f, PitchRange = (0.8f, 1.2f) });
 
             SuperHeatingWeapons HeatStacking = Main.player[Projectile.owner].GetModPlayer<SuperHeatingWeapons>();
-            HeatStacking.AddHeat(8f);
+            HeatStacking.AddHeat(9f);
 
             for (int i = 0; i < 30; i++)
             {

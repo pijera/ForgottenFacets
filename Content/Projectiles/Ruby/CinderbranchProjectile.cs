@@ -54,7 +54,7 @@ namespace ForgottenFacets.Content.Projectiles.Ruby
         {
             SuperHeatingWeapons HeatStacking = Main.player[Projectile.owner].GetModPlayer<SuperHeatingWeapons>();
 
-            HeatStacking.AddHeat(2f);
+            HeatStacking.AddHeat(3f);
 
             for (int i = 0; i < 5; i++)
             {

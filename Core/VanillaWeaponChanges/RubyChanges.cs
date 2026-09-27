@@ -1,9 +1,13 @@
-﻿using ForgottenFacets.Content.ModPlayers;
+﻿using ForgottenFacets.Content.Buffs;
+using ForgottenFacets.Content.Dusts;
+using ForgottenFacets.Content.ModPlayers;
 using ForgottenFacets.Content.Projectiles.Ruby.VanillaChanges;
+using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,6 +25,18 @@ namespace ForgottenFacets.Core.VanillaWeaponChanges
                 return true;
             if (item.type == ItemID.Flamarang)
                 return true;
+            if (item.type == ItemID.HellwingBow)
+                return true;
+            if (item.type == ItemID.FlowerofFire)
+                return true;
+            if (item.type == ItemID.PhoenixBlaster)
+                return true;
+            if (item.type == ItemID.Flamelash)
+                return true;
+            if (item.type == ItemID.Sunfury)
+                return true;
+            if (item.type == ItemID.FieryGreatsword)
+                return true;
 
             return base.AltFunctionUse(item, player);
         }
@@ -32,6 +48,11 @@ namespace ForgottenFacets.Core.VanillaWeaponChanges
             {
                 ActivateImpStaffOverheat(player);
                 return true;
+            }
+            if (item.type == ItemID.FieryGreatsword && player.altFunctionUse == 2 && heat.IsSuperHeated)
+            {
+                ActivateVolcanoOverheat(player);
+                return false;
             }
             return base.UseItem(item, player);
         }
@@ -53,6 +74,22 @@ namespace ForgottenFacets.Core.VanillaWeaponChanges
                     case ItemID.Flamarang:
                         ActivateFlamarangOverheat(player);
                         return false;
+                    case ItemID.HellwingBow:
+                        ActiveateHellwingOverheat(player);
+                        return false;
+                    case ItemID.FlowerofFire:
+                        ActivateFlowerOfFireOverheat(player);
+                        return false;
+                    case ItemID.PhoenixBlaster:
+                        ActivatePhoenixBlasterOverheat(player);
+                        return false;
+                    case ItemID.Flamelash:
+                        ActivateFlamelashOverheat(player);
+                        return false;
+                    case ItemID.Sunfury:
+                        ActivateSunfuryOverheat(player);
+                        return false;
+
                 }
             }
 
@@ -65,6 +102,7 @@ namespace ForgottenFacets.Core.VanillaWeaponChanges
 
             bool activatedImp = false;
 
+
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile projectile = Main.projectile[i];
@@ -76,6 +114,8 @@ namespace ForgottenFacets.Core.VanillaWeaponChanges
                 if (projectile.type != ProjectileID.FlyingImp)
                     continue;
 
+
+
                 ImpStaffChanges imp = projectile.GetGlobalProjectile<ImpStaffChanges>();
 
                 imp.ImpOverheated = true;
@@ -86,14 +126,22 @@ namespace ForgottenFacets.Core.VanillaWeaponChanges
                 activatedImp = true;
             }
 
+            SoundEngine.PlaySound(SoundID.Item45 with { Volume = Main.rand.NextFloat(0.6f, 0.8f), PitchRange = (0.5f, 1.5f) });
+
+            for (int i = 0; i < 20; i++)
+            {
+                Dust.NewDustPerfect(player.Center, ModContent.DustType<SparkleDust>(), Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(0.5f, 1f));
+                Dust.NewDustPerfect(player.Center, ModContent.DustType<GlowDust>(), Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(0.5f, 1f));
+            }
+
             if (activatedImp)
                 heat.ConsumeHeat();
         }
-
         private static void ActivateMoltenFuryOverheat(Player player)
         {
             SuperHeatingWeapons heat = player.GetModPlayer<SuperHeatingWeapons>();
             Vector2 direction = Main.MouseWorld - player.Center;
+
 
             if (direction == Vector2.Zero)
                 return;
@@ -102,9 +150,17 @@ namespace ForgottenFacets.Core.VanillaWeaponChanges
 
             Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), player.Center, direction, 
                 ModContent.ProjectileType<MoltenFuryChanges>(), player.GetWeaponDamage(player.HeldItem), player.GetWeaponKnockback(player.HeldItem));
+
+            SoundEngine.PlaySound(SoundID.Item42 with { Volume = Main.rand.NextFloat(0.6f, 0.8f), PitchRange = (-1f, 0.5f) });
+
+            for (int i = 0; i < 20; i++)
+            {
+                Dust.NewDustPerfect(player.Center, ModContent.DustType<SparkleDust>(), Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(0.5f, 1f));
+                Dust.NewDustPerfect(player.Center, ModContent.DustType<GlowDust>(), Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(0.5f, 1f));
+            }
+
             heat.ConsumeHeat();
         }
-
         private static void ActivateFlamarangOverheat(Player player)
         {
             SuperHeatingWeapons heat = player.GetModPlayer<SuperHeatingWeapons>();
@@ -114,6 +170,9 @@ namespace ForgottenFacets.Core.VanillaWeaponChanges
                 return;
 
             direction.Normalize();
+
+
+            SoundEngine.PlaySound(SoundID.DD2_JavelinThrowersAttack with { Volume = Main.rand.NextFloat(0.8f, 1f), PitchRange = (0.2f, 1.1f) });
 
             Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), player.Center, direction.RotatedBy(MathHelper.ToRadians(10f)) * 13f,
                 ModContent.ProjectileType<FlamarangChanges>(), player.GetWeaponDamage(player.HeldItem) + 5, player.GetWeaponKnockback(player.HeldItem));
@@ -125,10 +184,182 @@ namespace ForgottenFacets.Core.VanillaWeaponChanges
                 ModContent.ProjectileType<FlamarangChanges>(), player.GetWeaponDamage(player.HeldItem) + 5, player.GetWeaponKnockback(player.HeldItem));
 
 
+            for (int i = 0; i < 20; i++)
+            {
+                Dust.NewDustPerfect(player.Center, ModContent.DustType<SparkleDust>(), Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(0.5f, 1f));
+                Dust.NewDustPerfect(player.Center, ModContent.DustType<GlowDust>(), Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(0.5f, 1f));
+            }
+
             heat.ConsumeHeat();
         }
-    }
+        private static void ActiveateHellwingOverheat(Player player)
+        {
+            SuperHeatingWeapons heat = player.GetModPlayer<SuperHeatingWeapons>();
+            Vector2 direction = Main.MouseWorld - player.Center;
 
-    
+            if (direction == Vector2.Zero)
+                return;
+
+            direction.Normalize();
+
+            Vector2[] offsets =
+        {
+            new Vector2(-35f, -55f),
+            new Vector2(-15f, -30f),
+            new Vector2(-10f, 0f),
+            new Vector2(-15f, 30f),
+            new Vector2(-35f, 55f)
+        };
+
+            SoundEngine.PlaySound(SoundID.Shatter with { Volume = Main.rand.NextFloat(0.6f, 0.8f), PitchRange = (0.5f, 1.5f) });
+
+            float rotation = direction.ToRotation();
+
+            Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), player.Center + offsets[0].RotatedBy(rotation), direction * player.HeldItem.shootSpeed * 1.5f,
+                ModContent.ProjectileType<HellwingBowChanges>(), player.GetWeaponDamage(player.HeldItem) + 5, player.GetWeaponKnockback(player.HeldItem));
+
+            Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), player.Center + offsets[1].RotatedBy(rotation), direction * player.HeldItem.shootSpeed * 1.5f,
+                ModContent.ProjectileType<HellwingBowChanges>(), player.GetWeaponDamage(player.HeldItem) + 5, player.GetWeaponKnockback(player.HeldItem));
+
+            Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), player.Center + offsets[2].RotatedBy(rotation), direction * player.HeldItem.shootSpeed * 1.5f,
+                ModContent.ProjectileType<HellwingBowChanges>(), player.GetWeaponDamage(player.HeldItem) + 5, player.GetWeaponKnockback(player.HeldItem));
+
+            Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), player.Center + offsets[3].RotatedBy(rotation), direction * player.HeldItem.shootSpeed * 1.5f,
+                ModContent.ProjectileType<HellwingBowChanges>(), player.GetWeaponDamage(player.HeldItem) + 5, player.GetWeaponKnockback(player.HeldItem));
+
+            Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), player.Center + offsets[4].RotatedBy(rotation), direction * player.HeldItem.shootSpeed * 1.5f,
+                ModContent.ProjectileType<HellwingBowChanges>(), player.GetWeaponDamage(player.HeldItem) + 5, player.GetWeaponKnockback(player.HeldItem));
+
+
+            for (int i = 0; i < 20; i++)
+            {
+                Dust.NewDustPerfect(player.Center, ModContent.DustType<SparkleDust>(), Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(0.5f, 1f));
+                Dust.NewDustPerfect(player.Center, ModContent.DustType<GlowDust>(), Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(0.5f, 1f));
+            }
+
+            heat.ConsumeHeat();
+        }
+        private static void ActivateFlowerOfFireOverheat(Player player)
+        {
+            SuperHeatingWeapons heat = player.GetModPlayer<SuperHeatingWeapons>();
+            Vector2 direction = Main.MouseWorld - player.Center;
+
+            if (direction == Vector2.Zero)
+                return;
+
+            direction.Normalize();
+
+
+            Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), player.Center, direction * 13f,
+                ModContent.ProjectileType<FlowerOfFireChanges>(), player.GetWeaponDamage(player.HeldItem) + 5, player.GetWeaponKnockback(player.HeldItem));
+
+            for (int i = 0; i < 20; i++)
+            {
+                Dust.NewDustPerfect(player.Center, ModContent.DustType<SparkleDust>(), Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(0.5f, 1f));
+                Dust.NewDustPerfect(player.Center, ModContent.DustType<GlowDust>(), Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(0.5f, 1f));
+            }
+
+            heat.ConsumeHeat();
+        }
+        private static void ActivatePhoenixBlasterOverheat(Player player)
+        {
+            SuperHeatingWeapons heat = player.GetModPlayer<SuperHeatingWeapons>();
+            Vector2 direction = Main.MouseWorld - player.Center;
+
+            if (direction == Vector2.Zero)
+                return;
+
+            direction.Normalize();
+
+
+            Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), player.Center, direction * 13f,
+                ModContent.ProjectileType<PhoenixBlasterChanges>(), player.GetWeaponDamage(player.HeldItem) + 5, player.GetWeaponKnockback(player.HeldItem));
+
+            for (int i = 0; i < 20; i++)
+            {
+                Dust.NewDustPerfect(player.Center, ModContent.DustType<SparkleDust>(), Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(0.5f, 1f));
+                Dust.NewDustPerfect(player.Center, ModContent.DustType<GlowDust>(), Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(0.5f, 1f));
+            }
+
+            heat.ConsumeHeat();
+        }
+        private static void ActivateFlamelashOverheat(Player player)
+        {
+            SuperHeatingWeapons heat = player.GetModPlayer<SuperHeatingWeapons>();
+            Vector2 direction = Main.MouseWorld - player.Center;
+
+            if (direction == Vector2.Zero)
+                return;
+
+            direction.Normalize();
+
+            SoundEngine.PlaySound(SoundID.Item20 with { Volume = Main.rand.NextFloat(1f, 1.9f), PitchRange = (0.5f, 1.5f) });
+            Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), player.Center, direction * 22f,
+                ModContent.ProjectileType<FlamelashChanges>(), player.GetWeaponDamage(player.HeldItem), 0);
+
+            for (int i = 0; i < 20; i++)
+            {
+                Dust.NewDustPerfect(player.Center, ModContent.DustType<SparkleDust>(), Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(0.5f, 1f));
+                Dust.NewDustPerfect(player.Center, ModContent.DustType<GlowDust>(), Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(0.5f, 1f));
+
+                Dust.NewDustPerfect(player.Center, DustID.Torch, Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(1f, 2f));
+            }
+
+            heat.ConsumeHeat();
+        }
+        private static void ActivateSunfuryOverheat(Player player)
+        {
+            SuperHeatingWeapons heat = player.GetModPlayer<SuperHeatingWeapons>();
+            Vector2 direction = Main.MouseWorld - player.Center;
+
+            if (direction == Vector2.Zero)
+                return;
+
+            direction.Normalize();
+            Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), player.Center, direction * 13f,
+                ModContent.ProjectileType<SunfuryChanges>(), player.GetWeaponDamage(player.HeldItem) + 5, player.GetWeaponKnockback(player.HeldItem));
+
+            SoundEngine.PlaySound(SoundID.DD2_JavelinThrowersAttack with { Volume = Main.rand.NextFloat(0.8f, 1f), PitchRange = (0.2f, 1.1f) });
+
+            for (int i = 0; i < 20; i++)
+            {
+                Dust.NewDustPerfect(player.Center, ModContent.DustType<SparkleDust>(), Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(0.5f, 1f));
+                Dust.NewDustPerfect(player.Center, ModContent.DustType<GlowDust>(), Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(0.5f, 1f));
+            }
+
+            heat.ConsumeHeat();
+        }
+        private static void ActivateVolcanoOverheat(Player player)
+        {
+            SuperHeatingWeapons heat = player.GetModPlayer<SuperHeatingWeapons>();
+            ScreenShake shake = player.GetModPlayer<ScreenShake>();
+
+            player.itemAnimation = 0;
+            player.itemTime = 0;
+
+            Vector2 direction = Main.MouseWorld - player.Center;
+
+            if (direction == Vector2.Zero)
+                return;
+
+            direction.Normalize();
+
+            shake.AddShake(12);
+            player.AddBuff(ModContent.BuffType<VolcanoBuff>(), 630);
+            SoundEngine.PlaySound(SoundID.Item62 with { Volume = Main.rand.NextFloat(3f, 3.8f), PitchRange = (-1.1f, -0.2f) });
+            for (int i = 0; i < 12; i++)
+            {
+                Dust.NewDustPerfect(player.Center, ModContent.DustType<SparkleDust>(), Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(1.5f, 2.5f));
+                Dust.NewDustPerfect(player.Center, ModContent.DustType<GlowDust>(), Main.rand.NextVector2Circular(3, 3), 120, Color.OrangeRed, Main.rand.NextFloat(1f, 1.5f));
+
+            }
+            for (int i = 0; i < 50; i++)
+            {
+                Dust.NewDustPerfect(player.Center, DustID.Torch, Main.rand.NextVector2Circular(5, 5), 30, Color.OrangeRed, Main.rand.NextFloat(1.5f, 2.8f));
+            }
+
+            heat.ConsumeHeat();
+        }
+    }    
 }
 

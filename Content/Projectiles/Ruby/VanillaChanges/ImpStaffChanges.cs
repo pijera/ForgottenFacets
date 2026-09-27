@@ -124,7 +124,7 @@ namespace ForgottenFacets.Content.Projectiles.Ruby.VanillaChanges
                 p.type == ProjectileID.FlyingImp &&
                 p.GetGlobalProjectile<ImpStaffChanges>().ImpOverheated))
             {
-                heat.AddHeat(1f);
+                heat.AddHeat(5f);
             }
         }
 

@@ -77,22 +77,22 @@ Items: {
 	}
 
 	Cinderlance: {
-		DisplayName: Cinderlance
+		DisplayName: Emberpiercer
 		Tooltip: ""
 	}
 
 	Cinderbranch: {
-		DisplayName: Cinderbranch
+		DisplayName: Pyrebloom
 		Tooltip: ""
 	}
 
 	CinderSickle: {
-		DisplayName: Cinder Sickle
+		DisplayName: Hell Reaper
 		Tooltip: ""
 	}
 
 	CinderFlintlock: {
-		DisplayName: Cinder Flintlock
+		DisplayName: Emberlock
 		Tooltip: ""
 	}
 }
@@ -101,6 +101,11 @@ Buffs: {
 	FrostbittenDebuff: {
 		DisplayName: Frostbitten Debuff
 		Description: Can't really move that well
+	}
+
+	VolcanoBuff: {
+		DisplayName: Volcano Buff
+		Description: Mods.ForgottenFacets.Buffs.VolcanoBuff.Description
 	}
 }
 
@@ -124,6 +129,13 @@ Projectiles: {
 	CinderFlintlockFullHeatProjectile.DisplayName: Cinder Flintlock Full Heat Projectile
 	MoltenFuryChanges.DisplayName: Molten Fury Changes
 	FlamarangChanges.DisplayName: Flamarang Changes
+	HellwingBowChanges.DisplayName: Hellwing Bow Changes
+	FlowerOfFireChanges.DisplayName: Flower Of Fire Changes
+	PhoenixBlasterChanges.DisplayName: Phoenix Blaster Changes
+	FlamelashChanges.DisplayName: Flamelash Changes
+	SunfuryChanges.DisplayName: Sunfury Changes
+	EnemyChainExplosion.DisplayName: Enemy Chain Explosion
+	VolcanoVanillaChanges.DisplayName: Volcano Vanilla Changes
 }
 
 Tiles.AquamarineExposed.MapEntry: Aquamarine Exposed

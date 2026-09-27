@@ -33,7 +33,13 @@ namespace ForgottenFacets.Content.ModPlayers
 
             ItemID.ImpStaff,
             ItemID.MoltenFury,
-            ItemID.Flamarang
+            ItemID.Flamarang,
+            ItemID.HellwingBow,
+            ItemID.FlowerofFire,
+            ItemID.PhoenixBlaster,
+            ItemID.Flamelash,
+            ItemID.Sunfury,
+            ItemID.FieryGreatsword
         };
 
 

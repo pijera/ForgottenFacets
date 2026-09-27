@@ -1,1 +1,5 @@
-This description will show up on the steam page, check out https://steamcommunity.com/comment/Guide/formattinghelp.
+ForgottenFacets is a small Terraria mod project focused on experimentation and new ways to use familiar Terraria content.
+
+It currently contains custom weapons, gem-related crafting systems, elemental essences, armor, accessories, and modifications to several vanilla weapons.
+
+Expect unfinished content and changes as development continues.
