@@ -99,7 +99,7 @@ Items: {
 	CinderSickle: {
 		DisplayName: Hell Reaper
 		Tooltip:
-			'''	
+			'''
 			Hits twice before doing a spining attack
 			Hits generate a decent amount of [c/FF6428:HEAT]
 			At maximum [c/FF6428:HEAT], do a big dashing slash
@@ -124,6 +124,11 @@ Items: {
 			'USE NEAR OPEN FLAMES'
 			'''
 	}
+
+	StoneBreaker: {
+		DisplayName: Stone Breaker
+		Tooltip: ""
+	}
 }
 
 Buffs: {
@@ -135,6 +140,11 @@ Buffs: {
 	VolcanoBuff: {
 		DisplayName: Fiery Rage
 		Description: Increased damage, attack speed and movment speed
+	}
+
+	ArmorBreak1: {
+		DisplayName: Armor Break1
+		Description: Mods.ForgottenFacets.Buffs.ArmorBreak1.Description
 	}
 }
 
@@ -165,6 +175,8 @@ Projectiles: {
 	SunfuryChanges.DisplayName: Sunfury Changes
 	EnemyChainExplosion.DisplayName: Enemy Chain Explosion
 	VolcanoVanillaChanges.DisplayName: Volcano Vanilla Changes
+	StoneBreakerProjectile.DisplayName: Stone Breaker Projectile
+	StoneBreakerAOEProjectile.DisplayName: Stone Breaker A O E Projectile
 }
 
 Tiles.AquamarineExposed.MapEntry: Aquamarine Exposed

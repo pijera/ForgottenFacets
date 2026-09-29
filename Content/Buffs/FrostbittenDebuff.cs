@@ -27,35 +27,44 @@ namespace ForgottenFacets.Content.Buffs
     public class FrostbittenGlobalNpc : GlobalNPC
     {
         public bool frozen;
+        private bool defenseReducedBoss;
+        private bool defenseReduced;
         public override bool InstancePerEntity => true;
 
 
         public override void ResetEffects(NPC npc)
         {
             frozen = false;
+
+            if (defenseReduced)
+            {
+                npc.defense += 10;
+                defenseReduced = false;
+            }
+            if (defenseReducedBoss)
+            {
+                npc.defense += 7;
+                defenseReducedBoss = false;
+            }
         }
 
         public override void PostAI(NPC npc)
         {
             if (frozen)
             {
-                if (npc.boss)
+                if (npc.boss && !defenseReducedBoss)
                 {
                     npc.velocity *= 0.98f;
+                    npc.defense -= 7;
+                    defenseReducedBoss = true;
                 }
-                else
+                else if (defenseReduced)
                 {
                     npc.velocity *= 0.93f;
+                    npc.defense -= 10;
+                    defenseReduced = true;
                 }
             }
-        }
-
-        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
-        {
-            if (npc.boss)
-                modifiers.Defense -= 7;
-            else
-                modifiers.Defense -= 10;
         }
 
         public override void DrawEffects(NPC npc, ref Color drawColor)
